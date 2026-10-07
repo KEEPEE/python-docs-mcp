@@ -14,7 +14,7 @@ An [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server that g
 |---|---|
 | `python_docs` | Resolve one identifier (`json`, `xml.etree.ElementTree`, `ElementTree`) to a single stdlib module page as markdown. |
 | `python_search` | Ranked search over the local index of all 229 stdlib modules (name **and** description). |
-| `pypi_package` | PyPI package metadata + README: resolved version, summary, `Requires-Python`, license, homepage, project URLs. |
+| `pypi_package` | PyPI package metadata + README: resolved version, summary, `Requires-Python`, license, homepage, project URLs. The README is capped by `max_tokens` (default 6 000 estimated tokens). |
 | `python_status` | Real health check: index size/age, cache stats, live probes of docs.python.org and pypi.org, and politeness counters. |
 | `health_check` | Server liveness and version. |
 
@@ -207,9 +207,27 @@ Description matching is what makes this useful when you know the job, not the na
 
 `python_search` costs no requests while the cached index is fresh; if the index is stale the call rebuilds it (one robots fetch + one library-index page) inside the same budget.
 
-### `pypi_package(name, version=None)`
+### `pypi_package(name, version=None, max_tokens=6000)`
 
-PyPI metadata + README. `name` is the distribution name; `version` pins one release, which is how you read the README a specific version shipped. Returns `{"ok", "name", "version" (resolved), "summary", "requires_python", "license", "homepage", "project_urls", "readme_markdown", "url"}` — `url` is always the human-facing project page. Cached 1 day, keyed by name + version.
+PyPI metadata + README. `name` is the distribution name; `version` pins one release, which is how you read the README a specific version shipped; `max_tokens` caps the README. Returns `{"ok", "name", "version" (resolved), "summary", "requires_python", "license", "homepage", "project_urls", "readme_markdown", "url"}` — `url` is always the human-facing project page — plus `truncated` when there was a README to cap. Cached 1 day, keyed by name + version.
+
+**The README is capped, like `python_docs`'s markdown.** A README is the author's own document, and for a lot of packages it *is* the changelog: measured live 2026-10-07, `fetch_pypi_package("pydantic")` returns a **109 110-byte** README (≈ 27 277 estimated tokens) and `zope.interface` a 27 KB one. This path had no cap at all while `python_docs` had one, so one tool call could spill a hundred kilobytes into a context window. `max_tokens` applies the same rule as `python_docs` — `len(text)//4` estimate, cut at a line boundary, `truncated: true`, and the same `[truncated: showing ~X of ~Y estimated tokens]` note inside the body:
+
+```jsonc
+// pypi_package({ "name": "pydantic" })   — live output, 2026-10-07
+{
+  "ok": true,
+  "name": "pydantic",
+  "version": "2.13.5",
+  "…": "…",
+  "readme_markdown": "# Pydantic Validation\n…\n\n[truncated: showing ~5999 of ~27277 estimated tokens]",
+  "url": "https://pypi.org/project/pydantic/",
+  "cached": false,
+  "truncated": true
+}
+```
+
+A README that already fits is returned byte-for-byte with `truncated: false`, and a package with no README makes no truncation claim at all (no `truncated` key). The cache stores the **uncapped** document, so a later call with a bigger `max_tokens` gets more text without another request.
 
 ```jsonc
 // pypi_package({ "name": "attrs" })
@@ -426,6 +444,12 @@ python3 -m venv .venv
 **`pypi_package` says "JavaScript bot-verification page".** That is PyPI's CDN, not a bug in this server: the URL came back HTTP 200 with the challenge body. Retry later, check the name's case, drop the version pin — and remember that an unknown name can produce the same page ([why](#known-trade-off-the-js-client-challenge)).
 
 **A mixed-case module name can cost two requests.** docs.python.org serves module pages only under lowercase filenames, so `xml.etree.ElementTree` is fetched as `xml.etree.elementtree.html` first and the normal case costs one page request; only when the lowercase page genuinely does not exist does the fetcher spend a second request on the spelling you gave.
+
+## Support development
+
+python-docs-mcp is built and maintained by Michal in his spare time. If it saves you time or makes your team's docs easier to work with, a coffee (or more) would mean a lot — every contribution helps keep the project moving. 🙏
+
+**Pay via Revolut:** [revolut.me/michal4zvc](https://revolut.me/michal4zvc)
 
 ## License & attribution
 

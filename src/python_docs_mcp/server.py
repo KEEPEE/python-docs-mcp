@@ -21,12 +21,14 @@ Tool set:
   (estimated as ``len(text) // 4``) cut at a line boundary.
 - ``python_search(query, limit=8)`` — rank stdlib modules by name and
   description from the cached search index.
-- ``pypi_package(name, version=None)`` — PyPI metadata + README for a package
-  (optionally version-pinned), read from the robots-allowed **project page**
-  (``https://pypi.org/project/<name>/``), cached 1 day keyed by name+version.
-  The robots-disallowed JSON API is used only with the explicit
-  ``PYTHON_DOCS_MCP_PYPI_JSON_OPT_IN=1`` opt-in, and then the result carries a
-  ``"notice"`` saying so.
+- ``pypi_package(name, version=None, max_tokens=6000)`` — PyPI metadata +
+  README for a package (optionally version-pinned), read from the
+  robots-allowed **project page** (``https://pypi.org/project/<name>/``), cached
+  1 day keyed by name+version.  The README is capped by ``max_tokens`` with the
+  same line-boundary truncation and ``truncated`` flag ``python_docs`` uses; the
+  cache keeps the uncapped document.  The robots-disallowed JSON API is used
+  only with the explicit ``PYTHON_DOCS_MCP_PYPI_JSON_OPT_IN=1`` opt-in, and then
+  the result carries a ``"notice"`` saying so.
 - ``python_status()`` — real health check over the search index, the local
   cache and light GET probes of docs.python.org and pypi.org (both on
   robots-allowed paths).  Reports the politeness layer's counters in a
@@ -251,6 +253,32 @@ def _truncate_markdown(markdown: str, max_tokens: int | None) -> tuple[str, bool
     shown = len(cut) // 4
     note = f"\n\n[truncated: showing ~{shown} of ~{total} estimated tokens]"
     return cut.rstrip() + note, True
+
+
+def _cap_readme(payload: dict, max_tokens: int) -> dict:
+    """Apply the caller's token cap to ``readme_markdown`` in *payload*.
+
+    A README is the package author's document, and many authors keep their whole
+    changelog in it: ``pypi_package("pydantic")`` returned a 61 KB
+    ``readme_markdown`` because this path had **no** cap at all, while
+    :func:`python_docs` has truncated its markdown with
+    :func:`_truncate_markdown` from the start.  Two tools on one server should
+    not disagree about how much text a single call may return.
+
+    Mutates the dict it is given (callers pass a copy, or the payload they are
+    about to return) and only touches it when a README is actually present, so a
+    package without one keeps its old shape and makes no truncation claim.  The
+    bracket note :func:`_truncate_markdown` appends to the body is the same one
+    :func:`python_docs` puts in its ``markdown``, and ``truncated`` is reported
+    the same way.
+    """
+    readme = payload.get("readme_markdown")
+    if not readme:
+        return payload
+    capped, truncated = _truncate_markdown(readme, max_tokens)
+    payload["readme_markdown"] = capped
+    payload["truncated"] = truncated
+    return payload
 
 
 def _doc_payload(
@@ -546,7 +574,7 @@ def python_search(query: str, limit: int = 8) -> dict:
 
 
 @mcp.tool()
-def pypi_package(name: str, version: str | None = None) -> dict:
+def pypi_package(name: str, version: str | None = None, max_tokens: int = 6000) -> dict:
     """Look up a package on PyPI (metadata + README).
 
     Returns name, resolved version, summary, requires_python, license,
@@ -555,6 +583,15 @@ def pypi_package(name: str, version: str | None = None) -> dict:
     latest version is used. Metadata is cached for 1 day keyed by name+version;
     failures are never cached.
 
+    ``max_tokens`` truncates the README to roughly that many tokens (estimated
+    as len(text)//4), cut at a line boundary, and sets "truncated": true when
+    applied — the same rule and the same ``[truncated: showing ~X of ~Y
+    estimated tokens]`` note ``python_docs`` uses.  A README is the author's own
+    document and often *is* the changelog: an uncapped
+    ``pypi_package("pydantic")`` spilled 61 KB.  The cache holds the **uncapped**
+    README, so a later call with a bigger ``max_tokens`` gets more text without a
+    new request.
+
     The source is the robots-allowed **project page**
     (https://pypi.org/project/<name>/).  PyPI's JSON API is disallowed by that
     robots.txt and is used only when the environment variable
@@ -562,7 +599,12 @@ def pypi_package(name: str, version: str | None = None) -> dict:
     carries a "notice" field stating that the disallowed endpoint was used, at
     the user's own responsibility.  There is no fallback between the two.
 
-    On failure returns {"ok": False, "error", "suggestion"}.
+    On failure returns {"ok": False, "error", "suggestion"}.  When pypi.org
+    answers with its JavaScript bot-verification page the error says honestly
+    that this cannot be told apart from a package that does not exist
+    (``bot_challenge: true``); robots.txt disallows ``/simple/`` and
+    ``/pypi/*/json``, so there is no robots-legal probe that would tell them
+    apart, and that stays true with a cap in place.
     """
     try:
         pkg = str(name or "").strip()
@@ -589,7 +631,9 @@ def pypi_package(name: str, version: str | None = None) -> dict:
                 if isinstance(data, dict):
                     out = dict(data)
                     out["cached"] = True
-                    return out
+                    # The cached copy is uncapped; this caller's budget is
+                    # applied on the way out.
+                    return _cap_readme(out, max_tokens)
 
         with tool_budget("pypi_package"):
             result = fetch_pypi_package(pkg, ver)
@@ -612,9 +656,11 @@ def pypi_package(name: str, version: str | None = None) -> dict:
             # Only ever set on the explicit opt-in path; kept in the cached copy
             # so a cached result stays as honest as a fresh one.
             data["notice"] = result["notice"]
+        # Cache the uncapped document: the token budget belongs to this caller,
+        # not to the entry.
         _cache_set(key, data, PYPI_META_TTL)
         data["cached"] = False
-        return data
+        return _cap_readme(data, max_tokens)
     except Exception as exc:
         return {
             "ok": False,

@@ -442,6 +442,93 @@ def test_pypi_package_requires_name(fake_cache_dir, monkeypatch):
     assert calls["pypi"] == []
 
 
+# --- the README cap (P: pypi_package had no max_tokens at all) -------------- #
+#
+# A README is the author's document, and for a lot of packages it *is* the
+# changelog: an uncapped pypi_package("pydantic") spilled 61 KB of release
+# notes into one tool result, while python_docs has capped its markdown since
+# the first release.  These tests pin the same rule on the PyPI path.
+
+#: ~61 KB of changelog-ish lines (2 100 × 29 B + header = 60 922 B) ≈ 15 200
+#: estimated tokens (len//4), i.e. the same order of magnitude as the real
+#: pydantic README.
+_LONG_README = "# pydantic\n\n## Changelog\n\n" + ("changelog line for a release\n" * 2100)
+
+
+def test_pypi_package_caps_a_long_readme_and_reports_truncated(fake_cache_dir, monkeypatch):
+    assert len(_LONG_README) > 60_000
+    _patch_fetchers(monkeypatch, pypi=lambda n, v=None: _ok_pypi(n, "2.31.0") | {
+        "readme_markdown": _LONG_README
+    })
+
+    out = server_mod.pypi_package("pydantic")
+    assert out["ok"] is True
+    assert out["truncated"] is True
+    # 6 000 estimated tokens ≈ 24 000 characters, not the ~62 000 the README has.
+    assert 20_000 < len(out["readme_markdown"]) < 25_000
+    assert out["readme_markdown"].startswith("# pydantic")
+    # The same note python_docs puts in its markdown, naming what was cut.
+    assert "[truncated: showing ~" in out["readme_markdown"]
+    # The cut lands on a line boundary, never mid-word.
+    lines = out["readme_markdown"].splitlines()
+    assert lines[-1].startswith("[truncated: showing ~")
+    assert lines[-2] == ""
+    assert lines[-3] == "changelog line for a release"
+
+
+def test_pypi_package_max_tokens_is_honoured(fake_cache_dir, monkeypatch):
+    _patch_fetchers(monkeypatch, pypi=lambda n, v=None: _ok_pypi(n, "2.31.0") | {
+        "readme_markdown": _LONG_README
+    })
+
+    out = server_mod.pypi_package("pydantic", max_tokens=500)
+    assert out["truncated"] is True
+    # ~500 estimated tokens ≈ 2 000 characters.
+    assert len(out["readme_markdown"]) < 2_500
+
+
+def test_pypi_package_short_readme_passes_through_unchanged(fake_cache_dir, monkeypatch):
+    """A cap must not touch a README that already fits — no fake truncation."""
+    short = "# requests\n\nA HTTP library for Python.\n"
+    _patch_fetchers(monkeypatch, pypi=lambda n, v=None: _ok_pypi(n, "2.31.0") | {
+        "readme_markdown": short
+    })
+
+    out = server_mod.pypi_package("requests")
+    assert out["readme_markdown"] == short
+    assert out["truncated"] is False
+    assert "[truncated" not in out["readme_markdown"]
+
+
+def test_pypi_package_empty_readme_makes_no_truncation_claim(fake_cache_dir, monkeypatch):
+    _patch_fetchers(monkeypatch, pypi=lambda n, v=None: _ok_pypi(n, "2.31.0") | {
+        "readme_markdown": ""
+    })
+
+    out = server_mod.pypi_package("empty-readme-package")
+    assert out["ok"] is True
+    assert out["readme_markdown"] == ""
+    assert "truncated" not in out
+
+
+def test_pypi_package_cache_keeps_the_uncapped_readme(fake_cache_dir, monkeypatch):
+    """max_tokens belongs to the caller; the cached entry must stay complete."""
+    calls = _patch_fetchers(monkeypatch, pypi=lambda n, v=None: _ok_pypi(n, "2.31.0") | {
+        "readme_markdown": _LONG_README
+    })
+
+    small = server_mod.pypi_package("pydantic", max_tokens=200)
+    assert small["truncated"] is True
+
+    # ~15 200 estimated tokens, so 40 000 is a cap that must fit it whole —
+    # proving the cache kept the uncapped copy rather than the truncated one.
+    big = server_mod.pypi_package("pydantic", max_tokens=40_000)
+    assert big["cached"] is True
+    assert len(calls["pypi"]) == 1          # served from cache, not re-fetched
+    assert big["truncated"] is False        # the cache held the whole document
+    assert big["readme_markdown"] == _LONG_README
+
+
 # ---------------------------------------------------------------------------
 # python_status
 # ---------------------------------------------------------------------------
