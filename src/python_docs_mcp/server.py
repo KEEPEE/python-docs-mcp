@@ -627,6 +627,11 @@ def pypi_package(name: str, version: str | None = None) -> dict:
 def python_status() -> dict:
     """Real health check: search index, local cache and upstream endpoints.
 
+    The ``cache`` check gains ``read_only: true`` plus ``read_only_reason``
+    when the database cannot be written (P5).  It stays an "ok" check on
+    purpose: a cache that only reads is a degraded optimisation, not a sick
+    server, so ``overall`` does not change.
+
     Probes docs.python.org and pypi.org with a light GET on robots-allowed
     paths (8s timeout each, through the politeness layer — no curl subprocess).
     Never raises; returns {"server", "version", "checks": {...}, "politeness":
@@ -655,12 +660,19 @@ def python_status() -> dict:
             }
 
             try:
-                stats = DocCache().stats()
+                cache = DocCache()
+                stats = cache.stats()
                 checks["cache"] = {
                     "status": "ok",
                     "entries": int(stats.get("entries", 0)),
                     "expired": int(stats.get("expired", 0)),
                 }
+                if cache.read_only:
+                    # P5: a read-only cache is a degraded optimisation, not a
+                    # broken server.  It is announced here, and the check keeps
+                    # ``status: "ok"`` on purpose so ``overall`` is unchanged.
+                    checks["cache"]["read_only"] = True
+                    checks["cache"]["read_only_reason"] = cache.read_only_reason
             except Exception as exc:
                 checks["cache"] = {
                     "status": "error",
