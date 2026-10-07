@@ -12,14 +12,23 @@ Public entry points:
   :class:`~python_docs_mcp.cache.DocCache` under key ``search-index`` with a
   7-day TTL. On network/parse failure it falls back to the cached copy
   (fresh first, then stale via ``peek``) and only raises when nothing is
-  available.
+  available.  A **spent request budget** is different: it never raises, it
+  yields an index marked ``"partial": True`` + ``partial_reason`` which is
+  never cached (see below).
 - ``get_index(cache=None) -> dict`` — cached-or-build accessor used by the
   server; never raises (mirrors the java-spring-mcp ``load_index`` semantics).
 - ``search_modules(query, limit=8) -> list[dict]`` — offline multi-token
   ranking over module name + description.
 
 Index shape: ``{"modules": [...], "count": int, "built_at": <iso8601 UTC>}``
-(a failed ``get_index`` adds ``"error"``; a stale fallback adds ``"stale"``).
+(a failed ``get_index`` adds ``"error"``; a stale fallback adds ``"stale"``; a
+budget-truncated build adds ``"partial"`` + ``"partial_reason"``).
+
+The single fetch this build performs goes through
+:mod:`python_docs_mcp.politeness` (robots.txt, per-host throttle — the audit
+measured a 7 ms gap here, A2 §4.1) and spends a request budget: the enclosing
+tool call's budget when one is bound (:func:`python_docs_mcp.fetchers.tool_budget`),
+otherwise its own ``index:docs.python.org`` budget of :data:`INDEX_BUDGET_LIMIT`.
 
 No network access happens at import time.
 """
@@ -34,12 +43,14 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from .cache import DocCache
-from .fetchers import _client, _fetch_url
+from .fetchers import _http_get, current_budget
 
 __all__ = [
     "INDEX_KEY",
     "LIBRARY_INDEX_URL",
     "DEFAULT_MAX_AGE_SECONDS",
+    "INDEX_BUDGET_LIMIT",
+    "IndexBudgetExhausted",
     "parse_library_index_html",
     "build_index",
     "get_index",
@@ -49,6 +60,14 @@ __all__ = [
 INDEX_KEY = "search-index"
 LIBRARY_INDEX_URL = "https://docs.python.org/3/library/index.html"
 DEFAULT_MAX_AGE_SECONDS = 604800  # one week (7 days)
+
+#: Requests an index build may spend when no tool-call budget is bound.  Since
+#: A8 F3 the build pays for its own robots.txt fetch: cold = robots (1) +
+#: library index page (1) = **2 units** (measured live, A10 smoke).  6 leaves
+#: room for one ``429``/transport retry and a redirect chain instead of
+#: silently returning a partial index; when a tool call *is* bound this scope
+#: is not used at all — the build shares the tool's budget.
+INDEX_BUDGET_LIMIT = 6
 
 #: A canonical module name is a dotted lowercase Python identifier.  This
 #: filters out non-module pages that still carry the code/span.pre pattern,
@@ -203,22 +222,76 @@ def _read_cache(cache: DocCache | None, fresh_only: bool = True) -> dict | None:
     return data if _valid_index(data) else None
 
 
+class IndexBudgetExhausted(RuntimeError):
+    """The politeness request budget for the index build was already spent.
+
+    A *deliberate* stop, not a failure: :func:`_build_index` catches this and
+    returns a partial index instead of raising, so a budget-limited build never
+    turns into a tool error and never gets cached as if it were complete.
+    """
+
+
+def _index_budget() -> tuple[str, int]:
+    """Budget the index build should spend.
+
+    Inside a tool call the enclosing budget is shared, so an index build cannot
+    quietly double the request count of one ``python_docs`` / ``python_search``
+    call.  Outside one, it gets its own ``index:docs.python.org`` scope.
+    """
+    bound = current_budget()
+    if bound is not None:
+        return bound
+    return "index:docs.python.org", INDEX_BUDGET_LIMIT
+
+
 def _fetch_library_index_html() -> str:
-    """GET the library index page; raises ``RuntimeError`` on any failure."""
-    with _client() as client:
-        response, transport_error = _fetch_url(client, LIBRARY_INDEX_URL)
-    if response is None:
-        raise RuntimeError(f"transport error fetching library index: {transport_error}")
-    if response.status_code >= 400:
-        raise RuntimeError(
-            f"library index request failed with HTTP {response.status_code}"
+    """GET the library index page; raises ``RuntimeError`` on any failure.
+
+    Budget exhaustion raises :class:`IndexBudgetExhausted` (a ``RuntimeError``
+    subclass) which :func:`build_index` turns into a partial index rather than
+    an error — the difference matters: a spent budget is our own limit, a
+    network failure is the world's.
+    """
+    scope, limit = _index_budget()
+    response = _http_get(LIBRARY_INDEX_URL, budget_scope=scope, budget_limit=limit)
+    if response.budget_exhausted:
+        raise IndexBudgetExhausted(
+            response.error or f"request budget exhausted for scope {scope!r}"
         )
+    if response.error:
+        if response.status_code is not None:
+            raise RuntimeError(f"library index request failed with HTTP {response.status_code}")
+        raise RuntimeError(f"library index request failed: {response.error}")
     return response.text
 
 
+def _partial_index(reason: str) -> dict:
+    """A budget-truncated build result: empty, flagged, never cached.
+
+    This index is a single page, so "partial" here means "we were not allowed to
+    fetch it at all".  It is still returned (with ``partial_reason``) instead of
+    raising, and callers must not store it — caching an intentionally incomplete
+    index would freeze it for a week.
+    """
+    return {
+        "modules": [],
+        "count": 0,
+        "built_at": datetime.now(timezone.utc).isoformat(),
+        "partial": True,
+        "partial_reason": reason,
+    }
+
+
 def _build_index(cache: DocCache | None) -> dict:
-    """Fetch + parse + persist.  May raise (network or parse failures)."""
-    html = _fetch_library_index_html()
+    """Fetch + parse + persist.  Raises on network/parse failure only.
+
+    A spent request budget does **not** raise: it returns
+    :func:`_partial_index` so the caller can fall back to a cached copy.
+    """
+    try:
+        html = _fetch_library_index_html()
+    except IndexBudgetExhausted as exc:
+        return _partial_index(str(exc))
     modules = parse_library_index_html(html, base_url=LIBRARY_INDEX_URL)
     index = {
         "modules": modules,
@@ -240,7 +313,9 @@ def build_index() -> dict:
     and persists it in the :class:`DocCache` under key ``search-index`` with a
     7-day TTL.  On network or parse failure it falls back to the cached copy —
     fresh first (``cache.get``), then stale (``cache.peek``, returned with
-    ``"stale": True``) — and only raises when no usable cache exists.
+    ``"stale": True``) — and only raises when no usable cache exists.  When the
+    politeness request budget runs out it returns a ``"partial": True`` index
+    instead of raising, and that index is never persisted.
     """
     cache = _open_cache()
     try:
@@ -268,6 +343,9 @@ def get_index(cache: DocCache | None = None) -> dict:
       with ``"stale": True``.
     - Build failure with no usable cache: returns
       ``{"modules": [], "count": 0, "built_at": None, "error": ...}``.
+    - Budget-truncated build: a stale cached copy is preferred; with none, the
+      partial index is returned with an ``"error"`` so callers report it (it is
+      never written to the cache).
 
     ``cache`` may be passed explicitly (tests, custom storage); when omitted a
     default :class:`DocCache` is opened.
@@ -293,6 +371,18 @@ def get_index(cache: DocCache | None = None) -> dict:
             "built_at": None,
             "error": f"index build failed: {type(exc).__name__}: {exc}",
         }
+
+    if index.get("partial"):
+        # A budget-truncated rebuild is served once but never stored: caching an
+        # intentionally incomplete index would freeze it for a week.
+        stale = _read_cache(cache, fresh_only=False)
+        if stale is not None:
+            stale = dict(stale)
+            stale["stale"] = True
+            return stale
+        partial = dict(index)
+        partial["error"] = index.get("partial_reason") or "index build was budget-limited"
+        return partial
 
     # Persist to *this* cache when the (possibly monkeypatched) build did not.
     if cache is not None and index.get("built_at") is not None and not index.get("stale"):

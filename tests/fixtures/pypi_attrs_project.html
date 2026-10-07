@@ -1,0 +1,2853 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="defaultLanguage" content="en">
+    <meta name="availableLanguages"
+          content="de, en, es, eo, fr, pt_BR, el, ru, uk, he, zh_Hans, zh_Hant, ja, ko">
+    <title>attrs · PyPI</title>
+    <meta name="description"
+          content="Classes Without Boilerplate">
+    <link rel="stylesheet"
+          href="/static/css/warehouse-ltr.8ff5a501.css">
+    <link rel="stylesheet"
+          href="/static/css/fontawesome.94176253.css">
+    <link rel="stylesheet"
+          href="/static/css/fonts.3b5d1a1c.css">
+    <noscript>
+      <link rel="stylesheet"
+            href="/static/css/noscript.0673c9ea.css">
+    </noscript>
+    <link rel="icon"
+          href="/static/images/favicon.35549fe8.ico"
+          type="image/x-icon">
+    <link rel="alternate"
+          type="application/rss+xml"
+          title="RSS: 40 latest updates"
+          href="/rss/updates.xml">
+    <link rel="alternate"
+          type="application/rss+xml"
+          title="RSS: 40 newest packages"
+          href="/rss/packages.xml">
+<link rel="alternate"
+        type="application/rss+xml"
+        title="RSS: latest releases for attrs"
+        href="/rss/project/attrs/releases.xml">      <link rel="canonical" href="https://pypi.org/project/attrs/">
+    <meta property="og:url"
+          content="https://pypi.org/project/attrs/">
+    <meta property="og:site_name" content="PyPI">
+    <meta property="og:type" content="website">
+<meta property="og:image" content="https://pypi.org/static/images/og-card.00947198.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PyPI, the Python Package Index">
+  <meta name="twitter:image:alt" content="PyPI, the Python Package Index">
+  <meta name="twitter:card" content="summary_large_image">    <meta property="og:title"
+          content="attrs">
+    <meta property="og:description" content="Classes Without Boilerplate">
+<meta name="source-commit" content="b9dd37fe345f2143c7ad9ab30d8d1307e6055841">    <link rel="search"
+          type="application/opensearchdescription+xml"
+          title="PyPI"
+          href="/opensearch.xml">
+    <script defer src="/static/js/warehouse.d69382f6.js">
+    </script>
+  <script src="/static/js/utils/mathjax-config.e569c56a.js"></script>
+  <script async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"
+          integrity="sha256-1CldwzdEg2k1wTmf7s5RWVd7NMXI/7nxxjJM2C4DqII="
+          crossorigin="anonymous"></script>
+      <script src="/static/js/utils/plausible-init.f60de74f.js"></script>
+      <script async
+              src="https://analytics.python.org/js/pa-Z-QYGvOKHwfKWak0xljXn.js"></script>
+    <script async
+            src="https://media.ethicalads.io/media/client/v1.4.0/ethicalads.min.js"
+            integrity="sha256-U3hKDidudIaxBDEzwGJApJgPEf2mWk6cfMWghrAa6i0= sha384-UcmsCqcNRSLW/dV3Lo1oCi2/VaurXbib6p4HyUEOeIa/4OpsrnucrugAefzVZJfI sha512-q4t1L4xEjGV2R4hzqCa41P8jrgFUS8xTb8rdNv4FGvw7FpydVj/kkxBJHOiaoxHa8olCcx1Slk9K+3sNbsM4ug=="
+            crossorigin="anonymous"></script>
+  </head>
+  <body data-controller="viewport-toggle">
+      <!-- Accessibility: this link should always be the first piece of content inside the body-->
+      <a href="#content" class="skip-to-content">Skip to main content</a>
+      <button type="button"
+              class="button button--primary button--switch-to-mobile hidden"
+              data-viewport-toggle-target="switchToMobile"
+              data-action="viewport-toggle#switchToMobile">Switch to mobile version</button>
+      <div id="sticky-notifications" class="stick-to-top js-stick-to-top">
+        <!-- Add browser warning. Will show for ie9 and below -->
+        <!--[if IE]>
+      <div class="notification-bar notification-bar--warning" role="status">
+        <div class="notification-bar__container">
+          <span class="notification-bar__icon">
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <span class="sr-only">Warning</span>
+          </span>
+          <span class="notification-bar__message">You are using an unsupported browser, upgrade to a newer version.</span>
+        </div>
+      </div>
+      <![endif]-->
+        <noscript>
+          <div class="notification-bar notification-bar--warning" role="status">
+            <div class="notification-bar__container">
+              <span class="notification-bar__icon">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <span class="sr-only">Warning</span>
+              </span>
+              <span class="notification-bar__message">Some features may not work without JavaScript. Please try enabling it if you encounter problems.</span>
+            </div>
+          </div>
+        </noscript>
+<div data-html-include="/_includes/unauthed/notification-banners/"></div>    </div>
+<div data-html-include="/_includes/unauthed/flash-messages/"></div><div data-html-include="/_includes/authed/session-notifications/"></div><header class="site-header ">
+  <div class="site-container">
+    <div class="split-layout">
+        <div class="split-layout">
+          <div>
+            <a class="site-header__logo" href="/">
+              <img alt="PyPI"
+                   src="/static/images/logo-small.0e0855d0.svg">
+            </a>
+          </div>
+          <form class="search-form search-form--primary"
+                action="/search/"
+                role="search">
+            <label for="search" class="sr-only">Search PyPI</label>
+            <input id="search"
+                   class="search-form__search"
+                   type="text"
+                   name="q"
+                   placeholder="Type '/' to search projects"
+                   value=""
+                   autocomplete="off"
+                   autocapitalize="off"
+                   spellcheck="false"
+                   data-controller="search-focus"
+                   data-action="keydown@window->search-focus#focusSearchField"
+                   data-search-focus-target="searchField">
+            <button type="submit" class="search-form__button">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <span class="sr-only">Search</span>
+            </button>
+          </form>
+        </div>
+<div data-html-include="/_includes/authed/current-user-indicator/">        <div class="site-menu">
+    <nav class="site-menu site-menu--dropdown-below-desktop"
+         aria-label="Main navigation">
+      <ul>
+        <li class="site-menu__item">
+          <a href="/help/" class="site-menu__link">Help</a>
+        </li>
+        <li class="site-menu__item">
+          <a href="https://docs.pypi.org/" class="site-menu__link">Docs</a>
+        </li>
+        <li class="site-menu__item">
+          <a href="/account/login/?next=https%3A%2F%2Fpypi.org%2Fproject%2Fattrs%2F" class="site-menu__link">Log in</a>
+        </li>
+        <li class="site-menu__item">
+          <a href="/account/register/"
+             class="site-menu__link">Register</a>
+        </li>
+      </ul>
+    </nav>
+    <nav class="dropdown dropdown--on-menu site-menu--dropdown site-menu--dropdown-below-desktop"
+         aria-label="Main navigation">
+      <button type="button"
+              class="site-menu__link dropdown__trigger"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="View menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown__content"
+          aria-hidden="true"
+          aria-label="Main menu">
+        <li>
+          <a class="dropdown__link" href="/help/">Help</a>
+        </li>
+        <li>
+          <a class="dropdown__link" href="https://docs.pypi.org/">Docs</a>
+        </li>
+        <li>
+          <a class="dropdown__link" href="/account/login/?next=https%3A%2F%2Fpypi.org%2Fproject%2Fattrs%2F">Log in</a>
+        </li>
+        <li>
+          <a class="dropdown__link"
+             href="/account/register/">Register</a>
+        </li>
+      </ul>
+    </nav>
+<nav class="dropdown dropdown--on-menu dropdown--with-icons site-menu--dropdown"
+     aria-label="Localization">
+  <button type="button"
+          class="site-menu__link site-menu__link--with-icon dropdown__trigger"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-label="Change language">
+    <i class="fa-solid fa-language" aria-hidden="true"></i>
+  </button>
+  <form action="/locale/">
+    <ul class="dropdown__content dropdown__content--languages"
+        aria-hidden="true"
+        aria-label="Languages">
+        <li>
+          <button name="locale_id"
+                  value="de"
+                  type="submit"
+                  class="dropdown__link"
+>
+            Deutsch
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="en"
+                  type="submit"
+                  class="dropdown__link"
+aria-current="true">
+<i class="fa fa-check" aria-hidden="true"></i>            English
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="es"
+                  type="submit"
+                  class="dropdown__link"
+>
+            español
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="eo"
+                  type="submit"
+                  class="dropdown__link"
+>
+            Esperanto
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="fr"
+                  type="submit"
+                  class="dropdown__link"
+>
+            français
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="pt_BR"
+                  type="submit"
+                  class="dropdown__link"
+>
+            português (Brasil)
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="el"
+                  type="submit"
+                  class="dropdown__link"
+>
+            Ελληνικά
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="ru"
+                  type="submit"
+                  class="dropdown__link"
+>
+            русский
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="uk"
+                  type="submit"
+                  class="dropdown__link"
+>
+            українська
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="he"
+                  type="submit"
+                  class="dropdown__link"
+>
+            עברית
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="zh_Hans"
+                  type="submit"
+                  class="dropdown__link"
+>
+            中文 (简体)
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="zh_Hant"
+                  type="submit"
+                  class="dropdown__link"
+>
+            中文 (繁體)
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="ja"
+                  type="submit"
+                  class="dropdown__link"
+>
+            日本語
+          </button>
+        </li>
+        <li>
+          <button name="locale_id"
+                  value="ko"
+                  type="submit"
+                  class="dropdown__link"
+>
+            한국어
+          </button>
+        </li>
+    </ul>
+  </form>
+</nav>  </div>
+</div>  </div>
+</div>
+</header>
+  <div class="mobile-search">
+    <form class="search-form search-form--fullwidth"
+          action="/search/"
+          role="search">
+      <label for="mobile-search" class="sr-only">Search PyPI</label>
+      <input id="mobile-search"
+             class="search-form__search"
+             type="text"
+             name="q"
+             placeholder="Search projects"
+             value=""
+             autocomplete="off"
+             autocapitalize="off"
+             spellcheck="false">
+      
+      <button type="submit" class="search-form__button">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <span class="sr-only">Search</span>
+      </button>
+    </form>
+  </div>
+<main id="content">
+<div class="banner  banner--project">
+  <div class="project-header">
+    <h1 class="project-header__name">attrs 26.1.0</h1>
+      <p class="project-header__summary">Classes Without Boilerplate</p>
+      <div data-controller="clipboard"
+           data-clipboard-plausible-event-value="Copy Project Install Command">
+        <p class="project-header__pip-instructions">
+          <span id="pip-command" data-clipboard-target="source">pip install attrs</span>
+          <button type="button"
+                  class="copy-tooltip copy-tooltip-n"
+                  data-action="clipboard#copy"
+                  data-clipboard-target="tooltip"
+                  data-clipboard-tooltip-value="Copy to clipboard">
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            <span class="sr-only">Copy PIP instructions</span>
+          </button>
+        </p>
+      </div>
+  </div>
+</div><div data-html-include="/_includes/authed/administer-project-include/attrs"></div>  <div data-controller="project-tabs" class="project-tabs">
+<div class="horizontal-section horizontal-section--grey horizontal-section--no-padding">
+  <div class="site-container">
+    <nav class="project-tabs__tabs"
+         aria-label="Navigation for attrs">
+      <ul class="project-tabs__list" role="tablist">
+        <li role="presentation">
+          <a id="description-tab"
+             href="#description"
+             role="tab"
+             class="project-tabs__tab project-tabs__tab--is-active"
+             aria-selected="true"
+             aria-controls="description"
+             tabindex="0"
+             data-project-tabs-target="tab"
+             data-action="project-tabs#tabClick keydown->project-tabs#tabKeydown"
+             aria-label="Project description. Focus will be moved to the description.">
+            <span>
+              <i class="fa-regular fa-rectangle-list" aria-hidden="true"></i>
+Description            </span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a id="metadata-tab"
+             href="#metadata"
+             role="tab"
+             class="project-tabs__tab project-tabs__tab--mobile-only"
+             aria-selected="false"
+             aria-controls="metadata"
+             tabindex="-1"
+             data-project-tabs-target="tab"
+             data-action="project-tabs#tabClick keydown->project-tabs#tabKeydown"
+             aria-label="Metadata. Focus will be moved to the metadata panel.">
+            <span>
+              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+Metadata            </span>
+          </a>
+        </li>
+          <li role="presentation">
+            <a id="files-tab"
+               href="#files"
+               role="tab"
+               class="project-tabs__tab"
+               aria-selected="false"
+               aria-controls="files"
+               tabindex="-1"
+               data-project-tabs-target="tab"
+               data-action="project-tabs#tabClick keydown->project-tabs#tabKeydown"
+               aria-label="Files. Focus will be moved to the project files.">
+              <span>
+                <i class="fa-regular fa-circle-down" aria-hidden="true"></i>
+Release files              </span>
+            </a>
+          </li>
+        <li role="presentation">
+          <a id="history-tab"
+             href="#history"
+             role="tab"
+             class="project-tabs__tab"
+             aria-selected="false"
+             aria-controls="history"
+             tabindex="-1"
+             data-project-tabs-target="tab"
+             data-action="project-tabs#tabClick keydown->project-tabs#tabKeydown"
+             aria-label="Release history. Focus will be moved to the release history panel.">
+            <span>
+              <i class="fa fa-history" aria-hidden="true"></i>
+Release history            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>    <div class="site-container">
+      <div class="project-tabs__panel">
+<div id="description"
+     data-project-tabs-target="content"
+     role="tabpanel"
+     aria-labelledby="description-tab"
+     tabindex="-1">
+  <div class="project-description">
+    <div class="project-description__main">
+        <div class="project-description__content"><p align="center">
+  <a href="https://www.attrs.org/" rel="nofollow">
+    <img src="https://pypi-camo.freetls.fastly.net/5bfa38462cfd456bbb4bd61ebb4bca62f4e7d425/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f707974686f6e2d61747472732f61747472732f6d61696e2f646f63732f5f7374617469632f61747472735f6c6f676f2e737667" width="35%" alt="attrs">
+  </a>
+</p>
+<p><em>attrs</em> is the Python package that will bring back the <strong>joy</strong> of <strong>writing classes</strong> by relieving you from the drudgery of implementing object protocols (aka <a href="https://www.attrs.org/en/latest/glossary.html#term-dunder-methods" rel="nofollow">dunder methods</a>).
+Trusted by NASA for <a href="https://github.com/readme/featured/nasa-ingenuity-helicopter" rel="nofollow">Mars missions since 2020</a>!</p>
+<p>Its main goal is to help you to write <strong>concise</strong> and <strong>correct</strong> software without slowing down your code.</p>
+<h2><a href="#user-content-sponsors" id="user-content-sponsors" rel="nofollow"></a>Sponsors</h2>
+<p><em>attrs</em> would not be possible without our <a href="https://github.com/sponsors/hynek" rel="nofollow">amazing sponsors</a>.
+Especially those generously supporting us at the <em>The Organization</em> tier and higher:</p>
+
+<p align="center">
+
+</p><p><a href="https://www.variomedia.de/" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/b092368f0975e7cdca27d0345aa76674a451ce89/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f566172696f6d656469612e737667" width="190"></a>
+<a href="https://tidelift.com/?utm_source=lifter&amp;utm_medium=referral&amp;utm_campaign=hynek" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/9a964475219e391a7b6076c556cda5de5ef13f76/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f546964656c6966742e737667" width="190"></a>
+<a href="https://kraken.tech/" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/18d90e3659abbbb4fb97d0ef71e4f1ef0c754f29/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f4b72616b656e2e737667" width="190"></a>
+<a href="https://privacy-solutions.org/" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/ff2551f8f7b58ca780b06abd42e9d0859db4041a/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f507269766163792d536f6c7574696f6e732e737667" width="190"></a>
+<a href="https://filepreviews.io/" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/8fc98c0b2dd409be721854fe98648fd80ed90405/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f46696c6550726576696577732e737667" width="190"></a>
+<a href="https://www.testmuai.com/?utm_medium=sponsor&amp;utm_source=structlog" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/085de998217007d264b61c3398e7635b0ba31e84/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f546573744d752d41492e737667" width="190"></a>
+<a href="https://polar.sh/" rel="nofollow"><img src="https://pypi-camo.freetls.fastly.net/2f6c6c238559094c4590feb95a62e3481390f4ff/68747470733a2f2f7777772e61747472732e6f72672f656e2f32362e312e302f5f7374617469632f73706f6e736f72732f506f6c61722e737667" width="190"></a></p>
+
+<p></p>
+
+<p align="center">
+   <strong>Please consider <a href="https://github.com/sponsors/hynek" rel="nofollow">joining them</a> to help make <em>attrs</em>’s maintenance more sustainable!</strong>
+</p>
+
+<h2><a href="#user-content-example" id="user-content-example" rel="nofollow"></a>Example</h2>
+<p><em>attrs</em> gives you a class decorator and a way to declaratively define the attributes on that class:</p>
+
+<pre lang="pycon"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">attrs</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">define</span><span class="p">,</span> <span class="n">make_class</span><span class="p">,</span> <span class="n">Factory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@define</span>
+<span class="gp">... </span><span class="k">class</span><span class="w"> </span><span class="nc">SomeClass</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">a_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="gp">... </span>    <span class="n">list_of_numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Factory</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="nf">hard_math</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">another_number</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_number</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_of_numbers</span><span class="p">)</span> <span class="o">*</span> <span class="n">another_number</span>
+
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span>
+<span class="go">SomeClass(a_number=1, list_of_numbers=[1, 2, 3])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">hard_math</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">19</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">==</span> <span class="n">SomeClass</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span> <span class="o">!=</span> <span class="n">SomeClass</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">asdict</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="go">{'a_number': 1, 'list_of_numbers': [1, 2, 3]}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">SomeClass</span><span class="p">()</span>
+<span class="go">SomeClass(a_number=42, list_of_numbers=[])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span> <span class="o">=</span> <span class="n">make_class</span><span class="p">(</span><span class="s2">"C"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="p">)</span>
+<span class="go">C(a='foo', b='bar')</span>
+</pre>
+<p>After <em>declaring</em> your attributes, <em>attrs</em> gives you:</p>
+<ul>
+<li>a concise and explicit overview of the class's attributes,</li>
+<li>a nice human-readable <code>__repr__</code>,</li>
+<li>equality-checking methods,</li>
+<li>an initializer,</li>
+<li>and much more,</li>
+</ul>
+<p><em>without</em> writing dull boilerplate code again and again and <em>without</em> runtime performance penalties.</p>
+<hr>
+<p>This example uses <em>attrs</em>'s modern APIs that have been introduced in version 20.1.0, and the <em>attrs</em> package import name that has been added in version 21.3.0.
+The classic APIs (<code>@attr.s</code>, <code>attr.ib</code>, plus their serious-business aliases) and the <code>attr</code> package import name will remain <strong>indefinitely</strong>.</p>
+<p>Check out <a href="https://www.attrs.org/en/latest/names.html" rel="nofollow"><em>On The Core API Names</em></a> for an in-depth explanation!</p>
+<h3><a href="#user-content-hate-type-annotations" id="user-content-hate-type-annotations" rel="nofollow"></a>Hate Type Annotations!?</h3>
+<p>No problem!
+Types are entirely <strong>optional</strong> with <em>attrs</em>.
+Simply assign <code>attrs.field()</code> to the attributes instead of annotating them with types:</p>
+<pre lang="python"><span class="kn">from</span><span class="w"> </span><span class="nn">attrs</span><span class="w"> </span><span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="nd">@define</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SomeClass</span><span class="p">:</span>
+    <span class="n">a_number</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">list_of_numbers</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+</pre>
+<h2><a href="#user-content-data-classes" id="user-content-data-classes" rel="nofollow"></a>Data Classes</h2>
+<p>On the tin, <em>attrs</em> might remind you of <code>dataclasses</code> (and indeed, <code>dataclasses</code> <a href="https://hynek.me/articles/import-attrs/" rel="nofollow">are a descendant</a> of <em>attrs</em>).
+In practice it does a lot more and is more flexible.
+For instance, it allows you to define <a href="https://www.attrs.org/en/stable/comparison.html#customization" rel="nofollow">special handling of NumPy arrays for equality checks</a>, allows more ways to <a href="https://www.attrs.org/en/stable/init.html#hooking-yourself-into-initialization" rel="nofollow">plug into the initialization process</a>, has a replacement for <code>__init_subclass__</code>, and allows for stepping through the generated methods using a debugger.</p>
+<p>For more details, please refer to our <a href="https://www.attrs.org/en/stable/why.html#data-classes" rel="nofollow">comparison page</a>, but generally speaking, we are more likely to commit crimes against nature to make things work that one would expect to work, but that are quite complicated in practice.</p>
+<h2><a href="#user-content-project-information" id="user-content-project-information" rel="nofollow"></a>Project Information</h2>
+<ul>
+<li><a href="https://www.attrs.org/en/stable/changelog.html" rel="nofollow"><strong>Changelog</strong></a></li>
+<li><a href="https://www.attrs.org/" rel="nofollow"><strong>Documentation</strong></a></li>
+<li><a href="https://pypi.org/project/attrs/" rel="nofollow"><strong>PyPI</strong></a></li>
+<li><a href="https://github.com/python-attrs/attrs" rel="nofollow"><strong>Source Code</strong></a></li>
+<li><a href="https://github.com/python-attrs/attrs/blob/main/.github/CONTRIBUTING.md" rel="nofollow"><strong>Contributing</strong></a></li>
+<li><a href="https://github.com/python-attrs/attrs/wiki/Extensions-to-attrs" rel="nofollow"><strong>Third-party Extensions</strong></a></li>
+<li><strong>Get Help</strong>: use the <code>python-attrs</code> tag on <a href="https://stackoverflow.com/questions/tagged/python-attrs" rel="nofollow">Stack Overflow</a></li>
+</ul>
+<h3><a href="#user-content-attrs-for-enterprise" id="user-content-attrs-for-enterprise" rel="nofollow"></a><em>attrs</em> for Enterprise</h3>
+<p>Available as part of the <a href="https://tidelift.com/?utm_source=lifter&amp;utm_medium=referral&amp;utm_campaign=hynek" rel="nofollow">Tidelift Subscription</a>.</p>
+<p>The maintainers of <em>attrs</em> and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications.
+Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use.</p>
+<h2><a href="#user-content-release-information" id="user-content-release-information" rel="nofollow"></a>Release Information</h2>
+<h3><a href="#user-content-backwards-incompatible-changes" id="user-content-backwards-incompatible-changes" rel="nofollow"></a>Backwards-incompatible Changes</h3>
+<ul>
+<li>Field aliases are now resolved <em>before</em> calling <code>field_transformer</code>, so transformers receive fully populated <code>Attribute</code> objects with usable <code>alias</code> values instead of <code>None</code>.
+The new <code>Attribute.alias_is_default</code> flag indicates whether the alias was auto-generated (<code>True</code>) or explicitly set by the user (<code>False</code>).
+<a href="https://github.com/python-attrs/attrs/issues/1509" rel="nofollow">#1509</a></li>
+</ul>
+<h3><a href="#user-content-changes" id="user-content-changes" rel="nofollow"></a>Changes</h3>
+<ul>
+<li>Fix type annotations for <code>attrs.validators.optional()</code>, so it no longer rejects tuples with more than one validator.
+<a href="https://github.com/python-attrs/attrs/issues/1496" rel="nofollow">#1496</a></li>
+<li>The <code>attrs.validators.disabled()</code> contextmanager can now be nested.
+<a href="https://github.com/python-attrs/attrs/issues/1513" rel="nofollow">#1513</a></li>
+<li>Frozen classes can set <code>on_setattr=attrs.setters.NO_OP</code> in addition to <code>None</code>.
+<a href="https://github.com/python-attrs/attrs/issues/1515" rel="nofollow">#1515</a></li>
+<li>It's now possible to pass <em>attrs</em> <strong>instances</strong> in addition to <em>attrs</em> <strong>classes</strong> to <code>attrs.fields()</code>.
+<a href="https://github.com/python-attrs/attrs/issues/1529" rel="nofollow">#1529</a></li>
+</ul>
+<hr>
+<p><a href="https://www.attrs.org/en/stable/changelog.html" rel="nofollow">Full changelog →</a></p>
+</div>
+    </div>
+    <div class="project-description__sidebar">
+<div data-html-include="/_includes/authed/edit-project-button/attrs"></div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Project links</h2>
+    <div class="sidebar-section__content sidebar-section__content--verified">
+      <details class="sidebar-section__data-source">
+        <summary class="sidebar-section__data-source-label"
+                 title="2026-03-19 14:22:23 (+00:00)">
+Data verified by PyPI on Mar 19, 2026        </summary>
+        <div class="sidebar-section__data-source-description">
+Data provided by the project maintainers, verified at the time the release was uploaded to PyPI.        </div>
+      </details>
+      <div class="sidebar-section__data-block">
+        <ul class="sidebar-links">
+              <li>
+                <a class="sidebar-links__link" href="https://github.com/python-attrs/attrs" rel="nofollow">  <i class="fab fa-github" aria-hidden="true"></i>GitHub</a>
+              </li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-section__data-block">
+      <ul class="sidebar-links">
+            <li>
+              <a class="sidebar-links__link" href="https://www.attrs.org/en/stable/changelog.html" rel="nofollow">  <i class="fas fa-scroll" aria-hidden="true"></i>Changelog</a>
+            </li>
+            <li>
+              <a class="sidebar-links__link" href="https://www.attrs.org/" rel="nofollow">  <i class="fas fa-book" aria-hidden="true"></i>Documentation</a>
+            </li>
+            <li>
+              <a class="sidebar-links__link" href="https://github.com/sponsors/hynek" rel="nofollow">  <i class="fas fa-donate" aria-hidden="true"></i>Funding</a>
+            </li>
+            <li>
+              <a class="sidebar-links__link" href="https://tidelift.com/subscription/pkg/pypi-attrs?utm_source=pypi-attrs&amp;utm_medium=pypi" rel="nofollow">  <i class="fas fa-external-link-square-alt" aria-hidden="true"></i>Tidelift</a>
+            </li>
+      </ul>
+    </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Key dates</h2>
+  <div class="sidebar-section__content sidebar-section__content--pypi">
+    <details class="sidebar-section__data-source">
+      <summary class="sidebar-section__data-source-label"
+               title="PyPI data">PyPI data</summary>
+      <div class="sidebar-section__data-source-description">Data sourced directly from PyPI's database.</div>
+    </details>
+    <div class="sidebar-section__data-block">
+      <ul class="unstyled">
+          <li>
+              <strong>Released:</strong> <time datetime="2026-03-19T14:22:23+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time>
+          </li>
+      </ul>
+          <span class="badge badge--success">Latest release</span>
+    </div>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Owner</h2>
+  <div class="sidebar-section__content sidebar-section__content--pypi">
+    <details class="sidebar-section__data-source">
+      <summary class="sidebar-section__data-source-label"
+               title="PyPI data">PyPI data</summary>
+      <div class="sidebar-section__data-source-description">Data sourced directly from PyPI's database.</div>
+    </details>
+    <div class="sidebar-section__data-block">
+      <ul class="sidebar-links">
+        <li>
+          <a class="sidebar-links__link"
+             href="/org/attrs/"
+             aria-label="attrs">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
+             The attrs Cabal
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Credits</h2>
+      <div class="sidebar-section__data-block">
+          <p>
+            <strong>
+Author:            </strong>
+            <a href="mailto:hs@ox.cx">Hynek Schlawack</a>
+          </p>
+      </div>
+</div><div class="hidden"
+     data-controller="github-repo-stats"
+     data-github-repo-stats-github-repo-info-outlet=".github-repo-info"
+     data-github-repo-stats-url-value="https://api.github.com/repos/python-attrs/attrs"
+     data-github-repo-stats-issue-url-value="https://api.github.com/search/issues?q=repo:python-attrs/attrs+type:issue+state:open&amp;per_page=1"></div>
+<div class="sidebar-section">
+  <h2 class="sidebar-section__title">GitHub Statistics</h2>
+  <div class="sidebar-section__content sidebar-section__content--verified">
+    <details class="sidebar-section__data-source">
+      <summary class="sidebar-section__data-source-label"
+               title="2026-03-19 14:22:23 (+00:00)">Data verified by PyPI on&nbsp;Mar 19, 2026</summary>
+      <div class="sidebar-section__data-source-description">The GitHub source repository was provided by the project maintainers and verified by PyPI at the time of upload. Stars, forks, and open issues/PRs are derived from that repository and have not been independently verified.</div>
+    </details>
+    <div class="sidebar-section__data-block hidden github-repo-info"
+         data-controller="github-repo-info">
+      <ul class="sidebar-links">
+        <li>
+          <a class="sidebar-links__link"
+             rel="noopener"
+             href="https://github.com/python-attrs/attrs">
+            <i class="fab fa-github" aria-hidden="true"></i>
+Repository          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="stargazersUrl"
+             rel="noopener">
+            <i class="fa fa-star" aria-hidden="true"></i>
+Stars:
+            <strong data-github-repo-info-target="stargazersCount"></strong>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="forksUrl"
+             rel="noopener">
+            <i class="fa fa-code-branch" aria-hidden="true"></i>
+Forks:
+            <strong data-github-repo-info-target="forksCount"></strong>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="openIssuesUrl"
+             rel="noopener">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+Open issues:
+            <strong data-github-repo-info-target="openIssuesCount"></strong>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="openPRsUrl"
+             rel="noopener">
+            <i class="fa fa-code-pull-request" aria-hidden="true"></i>
+Open PRs:
+            <strong data-github-repo-info-target="openPRsCount"></strong>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div><div class="sidebar-section">
+    <h2 class="sidebar-section__title">
+License expression      <a href="https://spdx.github.io/spdx-spec/v3.0.1/annexes/spdx-license-expressions/"
+         target="_blank"
+         aria-label="About license expressions">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+      </a>
+    </h2>
+    <div class="sidebar-section__data-block">
+      <p>
+        MIT
+        <br>
+        <a target="_blank" href="https://spdx.org/licenses/">View SPDX License List</a>
+      </p>
+    </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Requires</h2>
+  <div class="sidebar-section__data-block">
+    <p><strong>Python</strong> &gt;=3.9</p>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Tags</h2>
+  <div class="sidebar-section__data-block">
+    <p class="tags">
+        <code>attribute</code>
+        <code>boilerplate</code>
+        <code>class</code>
+    </p>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Classifiers</h2>
+  <div class="sidebar-section__data-block">
+    <ul class="sidebar-section__classifiers">
+        <li>
+          Development Status
+          <ul>
+              <li>
+                <a href="/search/?c=Development+Status+%3A%3A+5+-+Production%2FStable">
+                  5 - Production/Stable
+                </a>
+              </li>
+          </ul>
+        </li>
+        <li>
+          Programming Language
+          <ul>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.9">
+                  Python :: 3.9
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.10">
+                  Python :: 3.10
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.11">
+                  Python :: 3.11
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.12">
+                  Python :: 3.12
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.13">
+                  Python :: 3.13
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.14">
+                  Python :: 3.14
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+Implementation+%3A%3A+CPython">
+                  Python :: Implementation :: CPython
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+Implementation+%3A%3A+PyPy">
+                  Python :: Implementation :: PyPy
+                </a>
+              </li>
+          </ul>
+        </li>
+        <li>
+          Typing
+          <ul>
+              <li>
+                <a href="/search/?c=Typing+%3A%3A+Typed">
+                  Typed
+                </a>
+              </li>
+          </ul>
+        </li>
+    </ul>
+  </div>
+</div><div class="sidebar-section">
+  <div class="sidebar-section"
+       data-ea-publisher="psf"
+       data-ea-type="psf"
+       data-ea-keywords="pypi-sidebar"></div>
+</div>
+<div class="sidebar-section">
+  <a class="button button--full-width button--warning"
+     href="https://pypi.org/project/attrs/submit-malware-report/"
+     rel="nofollow"
+     role="button">Report project as malware</a>
+</div>    </div>
+  </div>
+</div><div id="metadata"
+     data-project-tabs-target="content"
+     role="tabpanel"
+     aria-labelledby="metadata-tab"
+     tabindex="-1">
+  <h2 class="page-title">Metadata</h2>
+<div data-html-include="/_includes/authed/edit-project-button/attrs"></div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Project links</h2>
+    <div class="sidebar-section__content sidebar-section__content--verified">
+      <details class="sidebar-section__data-source">
+        <summary class="sidebar-section__data-source-label"
+                 title="2026-03-19 14:22:23 (+00:00)">
+Data verified by PyPI on Mar 19, 2026        </summary>
+        <div class="sidebar-section__data-source-description">
+Data provided by the project maintainers, verified at the time the release was uploaded to PyPI.        </div>
+      </details>
+      <div class="sidebar-section__data-block">
+        <ul class="sidebar-links">
+              <li>
+                <a class="sidebar-links__link" href="https://github.com/python-attrs/attrs" rel="nofollow">  <i class="fab fa-github" aria-hidden="true"></i>GitHub</a>
+              </li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-section__data-block">
+      <ul class="sidebar-links">
+            <li>
+              <a class="sidebar-links__link" href="https://www.attrs.org/en/stable/changelog.html" rel="nofollow">  <i class="fas fa-scroll" aria-hidden="true"></i>Changelog</a>
+            </li>
+            <li>
+              <a class="sidebar-links__link" href="https://www.attrs.org/" rel="nofollow">  <i class="fas fa-book" aria-hidden="true"></i>Documentation</a>
+            </li>
+            <li>
+              <a class="sidebar-links__link" href="https://github.com/sponsors/hynek" rel="nofollow">  <i class="fas fa-donate" aria-hidden="true"></i>Funding</a>
+            </li>
+            <li>
+              <a class="sidebar-links__link" href="https://tidelift.com/subscription/pkg/pypi-attrs?utm_source=pypi-attrs&amp;utm_medium=pypi" rel="nofollow">  <i class="fas fa-external-link-square-alt" aria-hidden="true"></i>Tidelift</a>
+            </li>
+      </ul>
+    </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Key dates</h2>
+  <div class="sidebar-section__content sidebar-section__content--pypi">
+    <details class="sidebar-section__data-source">
+      <summary class="sidebar-section__data-source-label"
+               title="PyPI data">PyPI data</summary>
+      <div class="sidebar-section__data-source-description">Data sourced directly from PyPI's database.</div>
+    </details>
+    <div class="sidebar-section__data-block">
+      <ul class="unstyled">
+          <li>
+              <strong>Released:</strong> <time datetime="2026-03-19T14:22:23+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time>
+          </li>
+      </ul>
+          <span class="badge badge--success">Latest release</span>
+    </div>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Owner</h2>
+  <div class="sidebar-section__content sidebar-section__content--pypi">
+    <details class="sidebar-section__data-source">
+      <summary class="sidebar-section__data-source-label"
+               title="PyPI data">PyPI data</summary>
+      <div class="sidebar-section__data-source-description">Data sourced directly from PyPI's database.</div>
+    </details>
+    <div class="sidebar-section__data-block">
+      <ul class="sidebar-links">
+        <li>
+          <a class="sidebar-links__link"
+             href="/org/attrs/"
+             aria-label="attrs">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
+             The attrs Cabal
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Credits</h2>
+      <div class="sidebar-section__data-block">
+          <p>
+            <strong>
+Author:            </strong>
+            <a href="mailto:hs@ox.cx">Hynek Schlawack</a>
+          </p>
+      </div>
+</div><div class="hidden"
+     data-controller="github-repo-stats"
+     data-github-repo-stats-github-repo-info-outlet=".github-repo-info"
+     data-github-repo-stats-url-value="https://api.github.com/repos/python-attrs/attrs"
+     data-github-repo-stats-issue-url-value="https://api.github.com/search/issues?q=repo:python-attrs/attrs+type:issue+state:open&amp;per_page=1"></div>
+<div class="sidebar-section">
+  <h2 class="sidebar-section__title">GitHub Statistics</h2>
+  <div class="sidebar-section__content sidebar-section__content--verified">
+    <details class="sidebar-section__data-source">
+      <summary class="sidebar-section__data-source-label"
+               title="2026-03-19 14:22:23 (+00:00)">Data verified by PyPI on&nbsp;Mar 19, 2026</summary>
+      <div class="sidebar-section__data-source-description">The GitHub source repository was provided by the project maintainers and verified by PyPI at the time of upload. Stars, forks, and open issues/PRs are derived from that repository and have not been independently verified.</div>
+    </details>
+    <div class="sidebar-section__data-block hidden github-repo-info"
+         data-controller="github-repo-info">
+      <ul class="sidebar-links">
+        <li>
+          <a class="sidebar-links__link"
+             rel="noopener"
+             href="https://github.com/python-attrs/attrs">
+            <i class="fab fa-github" aria-hidden="true"></i>
+Repository          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="stargazersUrl"
+             rel="noopener">
+            <i class="fa fa-star" aria-hidden="true"></i>
+Stars:
+            <strong data-github-repo-info-target="stargazersCount"></strong>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="forksUrl"
+             rel="noopener">
+            <i class="fa fa-code-branch" aria-hidden="true"></i>
+Forks:
+            <strong data-github-repo-info-target="forksCount"></strong>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="openIssuesUrl"
+             rel="noopener">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+Open issues:
+            <strong data-github-repo-info-target="openIssuesCount"></strong>
+          </a>
+        </li>
+        <li>
+          <a class="sidebar-links__link"
+             data-github-repo-info-target="openPRsUrl"
+             rel="noopener">
+            <i class="fa fa-code-pull-request" aria-hidden="true"></i>
+Open PRs:
+            <strong data-github-repo-info-target="openPRsCount"></strong>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div><div class="sidebar-section">
+    <h2 class="sidebar-section__title">
+License expression      <a href="https://spdx.github.io/spdx-spec/v3.0.1/annexes/spdx-license-expressions/"
+         target="_blank"
+         aria-label="About license expressions">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+      </a>
+    </h2>
+    <div class="sidebar-section__data-block">
+      <p>
+        MIT
+        <br>
+        <a target="_blank" href="https://spdx.org/licenses/">View SPDX License List</a>
+      </p>
+    </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Requires</h2>
+  <div class="sidebar-section__data-block">
+    <p><strong>Python</strong> &gt;=3.9</p>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Tags</h2>
+  <div class="sidebar-section__data-block">
+    <p class="tags">
+        <code>attribute</code>
+        <code>boilerplate</code>
+        <code>class</code>
+    </p>
+  </div>
+</div><div class="sidebar-section">
+  <h2 class="sidebar-section__title">Classifiers</h2>
+  <div class="sidebar-section__data-block">
+    <ul class="sidebar-section__classifiers">
+        <li>
+          Development Status
+          <ul>
+              <li>
+                <a href="/search/?c=Development+Status+%3A%3A+5+-+Production%2FStable">
+                  5 - Production/Stable
+                </a>
+              </li>
+          </ul>
+        </li>
+        <li>
+          Programming Language
+          <ul>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.9">
+                  Python :: 3.9
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.10">
+                  Python :: 3.10
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.11">
+                  Python :: 3.11
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.12">
+                  Python :: 3.12
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.13">
+                  Python :: 3.13
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+3.14">
+                  Python :: 3.14
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+Implementation+%3A%3A+CPython">
+                  Python :: Implementation :: CPython
+                </a>
+              </li>
+              <li>
+                <a href="/search/?c=Programming+Language+%3A%3A+Python+%3A%3A+Implementation+%3A%3A+PyPy">
+                  Python :: Implementation :: PyPy
+                </a>
+              </li>
+          </ul>
+        </li>
+        <li>
+          Typing
+          <ul>
+              <li>
+                <a href="/search/?c=Typing+%3A%3A+Typed">
+                  Typed
+                </a>
+              </li>
+          </ul>
+        </li>
+    </ul>
+  </div>
+</div><div class="sidebar-section">
+  <div class="sidebar-section"
+       data-ea-publisher="psf"
+       data-ea-type="psf"
+       data-ea-keywords="pypi-sidebar"></div>
+</div>
+<div class="sidebar-section">
+  <a class="button button--full-width button--warning"
+     href="https://pypi.org/project/attrs/submit-malware-report/"
+     rel="nofollow"
+     role="button">Report project as malware</a>
+</div></div>  <div id="files"
+       data-project-tabs-target="content"
+       role="tabpanel"
+       aria-labelledby="files-tab"
+       tabindex="-1"
+       data-controller="filter-list">
+    <h2 class="page-title">Release files for attrs 26.1.0</h2>
+    <p>
+For a detailed explanation of source distributions (sdists) and built distributions (wheels), please see the <a href="https://packaging.python.org/en/latest/discussions/package-formats/#package-formats" title="External link" target="_blank" rel="noopener">package formats documentation</a>.    </p>
+      <h3>
+        <i class="fa-regular fa-file-code" aria-hidden="true"></i>
+Source distribution (sdist)    </h3>
+    <table class="table table--files">
+      <caption class="sr-only">Source distribution for attrs 26.1.0</caption>
+      <thead>
+        <tr>
+          <th scope="col">File</th>
+          <th scope="col">Size</th>
+          <th scope="col">Uploaded</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>
+              <span class="file-info__name">
+                <a href="https://files.pythonhosted.org/packages/9a/8e/82a0fe20a541c03148528be8cac2408564a6c9a0cc7e9171802bc1d26985/attrs-26.1.0.tar.gz"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> <span>attrs-26.1.0.tar.gz</span></a>
+              </span>
+            </td>
+            <td>952.1 kB</td>
+            <td>
+                <time datetime="2026-03-19T14:22:25+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time>
+            </td>
+            <td>
+              <a href="#attrs-26.1.0.tar.gz"
+                 id="attrs-26.1.0.tar.gz-tab"
+                 class="button button--small button--outline file-info__details-button"
+                 data-project-tabs-target="tab"
+                 data-action="project-tabs#onTabClick">Details</a>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+<hr>    <h3>
+      <i class="fa-solid fa-cube" aria-hidden="true"></i>
+Built distribution (wheel)  </h3>
+  <table class="table table--files">
+    <caption class="sr-only">Table of built distributions (wheels) for attrs 26.1.0</caption>
+    <thead>
+      <tr>
+        <th scope="col">File</th>
+        <th scope="col" class="table__filter-col">
+Interpreter        </th>
+        <th scope="col" class="table__filter-col">
+ABI        </th>
+        <th scope="col" class="table__filter-col">
+Platform        </th>
+        <th scope="col">
+          <a href="https://pypi.org/project/attrs/#files"
+             data-action="filter-list#filterClear"
+             data-filter-list-target="clear"
+             class="hidden button button--link">Reset</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr class="file-row"
+ data-filter-list-target="item" data-filtered-target-filename='["attrs-26.1.0-py3-none-any.whl", "Python 3"]'  data-filtered-target-interpreter='["py3"]'  data-filtered-target-abi='["none"]'  data-filtered-target-platform='["any"]'  data-filtered-target-other='[]' >
+          <td>
+            <span class="file-info__name">
+              <a href="https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> <span>attrs-26.1.0-py3-none-any.whl</span></a>
+            </span>
+            <span class="file-info__metadata">
+              <span class="file-info__meta">67.5 kB</span>
+              <span class="file-info__meta-divider" aria-hidden="true"></span>
+                <span class="file-info__meta">
+                  <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                  <time datetime="2026-03-19T14:22:23+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time>
+                </span>
+            </span>
+          </td>
+            <td class="table__filter-col">
+              Python 3
+            </td>
+            <td class="table__filter-col">
+              none
+            </td>
+            <td class="table__filter-col">
+              any
+            </td>
+          <td>
+            <a href="#attrs-26.1.0-py3-none-any.whl"
+               id="attrs-26.1.0-py3-none-any.whl-tab"
+               class="button button--small button--outline file-info__details-button"
+               data-project-tabs-target="tab"
+               data-action="project-tabs#onTabClick">Details</a>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+    <hr />
+    <div>
+      <p>
+        <strong>Total release size:</strong> 1.0 MB
+      </p>
+    </div>
+</div>
+<div id="attrs-26.1.0.tar.gz"
+     data-project-tabs-target="content"
+     role="tabpanel"
+     aria-labelledby="attrs-26.1.0.tar.gz-tab"
+     tabindex="-1">
+  <h2 class="page-title">
+    <a href="#files"
+       data-project-tabs-target="tab"
+       data-action="project-tabs#onTabClick">Release files</a>
+    / attrs-26.1.0.tar.gz
+  </h2>
+  <table class="table table--information">
+    <tbody>
+      <tr>
+        <th scope="row">Download URL</th>
+        <td class="file-download">
+          <a href="https://files.pythonhosted.org/packages/9a/8e/82a0fe20a541c03148528be8cac2408564a6c9a0cc7e9171802bc1d26985/attrs-26.1.0.tar.gz">
+            <i class="fa-regular fa-circle-down" aria-hidden="true"></i>
+            <span>attrs-26.1.0.tar.gz</span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Size</th>
+        <td>952.1 kB</td>
+      </tr>
+        <tr>
+          <th scope="row">Tags</th>
+          <td class="file-tags">
+                <span class="badge badge--neutral badge--no-uppercase">Source</span>
+          </td>
+        </tr>
+      <tr data-controller="clipboard">
+        <th scope="row">
+SHA-256 checksum          <br>
+          <a href="https://pip.pypa.io/en/stable/topics/secure-installs/#hash-checking-mode"
+             title="External link"
+             target="_blank"
+             rel="noopener">How to use checksums</a>
+        </th>
+        <td>
+          <code class="code-block code-block--with-copy">
+            <span data-clipboard-target="source">d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32</span>
+            <button type="button"
+                    class="button button--small copy-tooltip copy-tooltip-w"
+                    data-action="clipboard#copy"
+                    data-clipboard-target="tooltip"
+                    data-clipboard-tooltip-value="Copy to clipboard">
+              <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            </button>
+          </code>
+        </td>
+      </tr>
+      <tr data-controller="clipboard">
+        <th scope="row">
+BLAKE2b-256 checksum          <br>
+          <a href="https://pip.pypa.io/en/stable/topics/secure-installs/#hash-checking-mode"
+             title="External link"
+             target="_blank"
+             rel="noopener">How to use checksums</a>
+        </th>
+        <td>
+          <code class="code-block code-block--with-copy">
+            <span data-clipboard-target="source">9a8e82a0fe20a541c03148528be8cac2408564a6c9a0cc7e9171802bc1d26985</span>
+            <button type="button"
+                    class="button button--small copy-tooltip copy-tooltip-w"
+                    data-action="clipboard#copy"
+                    data-clipboard-target="tooltip"
+                    data-clipboard-tooltip-value="Copy to clipboard">
+              <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            </button>
+          </code>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Upload date</th>
+        <td><time datetime="2026-03-19T14:22:25+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time></td>
+      </tr>
+      <tr>
+        <th scope="row">
+Uploaded using Trusted Publishing?          <br>
+          <a href="https://docs.pypi.org/trusted-publishers/">What is trusted publishing?</a>
+        </th>
+        <td>
+Yes        </td>
+      </tr>
+        <tr>
+          <th scope="row">Uploaded via</th>
+          <td>
+            <code class="code-block code-block--tight">twine/6.1.0 CPython/3.13.7</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+    <h3>Provenance</h3>
+    <p>
+<strong>Provenance</strong> describes where a file came from. On PyPI, provenance is shared via <strong>attestations</strong>, which provide a verifiable record of the build or publishing details. <a href="https://docs.pypi.org/attestations/">View details, limitations and caveats.</a>    </p>
+<div class="attestation attestation--pypi">
+  <div class="attestation__header">
+    <div class="attestation__publisher">
+      <div class="attestation__publisher-icons">
+          <img src="https://pypi.org/static/images/github.683a0246.svg"
+               alt=""
+               aria-hidden="true">
+          <img src="https://pypi.org/static/images/pypi-attestation-cube.1cfdb012.svg"
+               alt=""
+               aria-hidden="true">
+      </div>
+    </div>
+    <div class="attestation__header-content">
+      <h4>
+          <a href="https://docs.pypi.org/attestations/publish/v1" target="_blank" rel="noopener">
+PyPI Publish          </a>
+Attestation      </h4>
+      <p>
+PyPI verified that this artifact, at this checksum, originated from the publisher listed below.      </p>
+      <p>
+        <strong>
+Signed by GitHub Actions, verified by PyPI on Mar 19, 2026.        </strong>
+      </p>
+        <a href="https://search.sigstore.dev/?logIndex=1134709027"
+           target="_blank"
+           rel="noopener"
+           title="Sigstore transparency entry">Transparency log</a>
+    </div>
+  </div>
+  <div class="attestation__details">
+    <div class="attestation__metadata">
+      <div class="attestation__metadata-header">
+        <span class="attestation__metadata-icon">
+          <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
+        </span>
+        <h5 class="attestation__metadata-title">Identity</h5>
+      </div>
+      <dl class="attestation__metadata-content">
+        <dt>
+Publishing platform        </dt>
+        <dd>
+          GitHub Actions
+        </dd>
+          <dt>
+Publishing repository          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs  " target="_blank" rel="noopener">github.com/python-attrs/attrs</a>
+          </dd>
+          <dt>
+Publishing commit          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs/tree/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36"
+               target="_blank"
+               rel="noopener">github.com/python-attrs/attrs/tree/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36</a>
+          </dd>
+      </dl>
+    </div>
+    <div class="attestation__metadata">
+      <div class="attestation__metadata-header">
+        <span class="attestation__metadata-icon">
+            <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
+        </span>
+        <h5 class="attestation__metadata-title">
+Workflow        </h5>
+      </div>
+      <dl class="attestation__metadata-content">
+          <dt>
+Publishing configuration          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs/blob/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36/.github/workflows/pypi-package.yml" target="_blank" rel="noopener">github.com/python-attrs/attrs/blob/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36/.github/workflows/pypi-package.yml</a>
+          </dd>
+          <dt>
+Publishing logs          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs/actions/runs/23299546967/attempts/1" target="_blank" rel="noopener">github.com/python-attrs/attrs/actions/runs/23299546967/attempts/1</a>
+          </dd>
+      </dl>
+    </div>
+    <div class="attestation__metadata">
+      <div class="attestation__metadata-header">
+        <span class="attestation__metadata-icon">
+          <i class="fa-regular fa-file" aria-hidden="true"></i>
+        </span>
+        <h5 class="attestation__metadata-title">Artifact</h5>
+      </div>
+      <dl class="attestation__metadata-content">
+          <dt>Subject</dt>
+          <dd>
+            <code>attrs-26.1.0.tar.gz</code>
+          </dd>
+          <dt>SHA-256 checksum</dt>
+          <dd>
+            <code class="code-block code-block--with-copy attestation__checksum"
+                  data-controller="clipboard">
+              <span data-clipboard-target="source">d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32</span>
+              <button type="button"
+                      class="button button--small copy-tooltip copy-tooltip-w"
+                      data-action="clipboard#copy"
+                      data-clipboard-target="tooltip"
+                      data-clipboard-tooltip-value="Copy to clipboard">
+                <i class="fa-regular fa-copy" aria-hidden="true"></i>
+              </button>
+            </code>
+            <a href="https://docs.pypi.org/attestations/consuming-attestations/"
+               target="_blank"
+               rel="noopener">Verifying attestations</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+</div></div><div id="attrs-26.1.0-py3-none-any.whl"
+     data-project-tabs-target="content"
+     role="tabpanel"
+     aria-labelledby="attrs-26.1.0-py3-none-any.whl-tab"
+     tabindex="-1">
+  <h2 class="page-title">
+    <a href="#files"
+       data-project-tabs-target="tab"
+       data-action="project-tabs#onTabClick">Release files</a>
+    / attrs-26.1.0-py3-none-any.whl
+  </h2>
+  <table class="table table--information">
+    <tbody>
+      <tr>
+        <th scope="row">Download URL</th>
+        <td class="file-download">
+          <a href="https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl">
+            <i class="fa-regular fa-circle-down" aria-hidden="true"></i>
+            <span>attrs-26.1.0-py3-none-any.whl</span>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Size</th>
+        <td>67.5 kB</td>
+      </tr>
+        <tr>
+          <th scope="row">Tags</th>
+          <td class="file-tags">
+                <span class="badge badge--neutral badge--no-uppercase">Python 3</span>
+          </td>
+        </tr>
+      <tr data-controller="clipboard">
+        <th scope="row">
+SHA-256 checksum          <br>
+          <a href="https://pip.pypa.io/en/stable/topics/secure-installs/#hash-checking-mode"
+             title="External link"
+             target="_blank"
+             rel="noopener">How to use checksums</a>
+        </th>
+        <td>
+          <code class="code-block code-block--with-copy">
+            <span data-clipboard-target="source">c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309</span>
+            <button type="button"
+                    class="button button--small copy-tooltip copy-tooltip-w"
+                    data-action="clipboard#copy"
+                    data-clipboard-target="tooltip"
+                    data-clipboard-tooltip-value="Copy to clipboard">
+              <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            </button>
+          </code>
+        </td>
+      </tr>
+      <tr data-controller="clipboard">
+        <th scope="row">
+BLAKE2b-256 checksum          <br>
+          <a href="https://pip.pypa.io/en/stable/topics/secure-installs/#hash-checking-mode"
+             title="External link"
+             target="_blank"
+             rel="noopener">How to use checksums</a>
+        </th>
+        <td>
+          <code class="code-block code-block--with-copy">
+            <span data-clipboard-target="source">64b417d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395</span>
+            <button type="button"
+                    class="button button--small copy-tooltip copy-tooltip-w"
+                    data-action="clipboard#copy"
+                    data-clipboard-target="tooltip"
+                    data-clipboard-tooltip-value="Copy to clipboard">
+              <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            </button>
+          </code>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">Upload date</th>
+        <td><time datetime="2026-03-19T14:22:23+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time></td>
+      </tr>
+      <tr>
+        <th scope="row">
+Uploaded using Trusted Publishing?          <br>
+          <a href="https://docs.pypi.org/trusted-publishers/">What is trusted publishing?</a>
+        </th>
+        <td>
+Yes        </td>
+      </tr>
+        <tr>
+          <th scope="row">Uploaded via</th>
+          <td>
+            <code class="code-block code-block--tight">twine/6.1.0 CPython/3.13.7</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+    <h3>Provenance</h3>
+    <p>
+<strong>Provenance</strong> describes where a file came from. On PyPI, provenance is shared via <strong>attestations</strong>, which provide a verifiable record of the build or publishing details. <a href="https://docs.pypi.org/attestations/">View details, limitations and caveats.</a>    </p>
+<div class="attestation attestation--pypi">
+  <div class="attestation__header">
+    <div class="attestation__publisher">
+      <div class="attestation__publisher-icons">
+          <img src="https://pypi.org/static/images/github.683a0246.svg"
+               alt=""
+               aria-hidden="true">
+          <img src="https://pypi.org/static/images/pypi-attestation-cube.1cfdb012.svg"
+               alt=""
+               aria-hidden="true">
+      </div>
+    </div>
+    <div class="attestation__header-content">
+      <h4>
+          <a href="https://docs.pypi.org/attestations/publish/v1" target="_blank" rel="noopener">
+PyPI Publish          </a>
+Attestation      </h4>
+      <p>
+PyPI verified that this artifact, at this checksum, originated from the publisher listed below.      </p>
+      <p>
+        <strong>
+Signed by GitHub Actions, verified by PyPI on Mar 19, 2026.        </strong>
+      </p>
+        <a href="https://search.sigstore.dev/?logIndex=1134709040"
+           target="_blank"
+           rel="noopener"
+           title="Sigstore transparency entry">Transparency log</a>
+    </div>
+  </div>
+  <div class="attestation__details">
+    <div class="attestation__metadata">
+      <div class="attestation__metadata-header">
+        <span class="attestation__metadata-icon">
+          <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
+        </span>
+        <h5 class="attestation__metadata-title">Identity</h5>
+      </div>
+      <dl class="attestation__metadata-content">
+        <dt>
+Publishing platform        </dt>
+        <dd>
+          GitHub Actions
+        </dd>
+          <dt>
+Publishing repository          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs  " target="_blank" rel="noopener">github.com/python-attrs/attrs</a>
+          </dd>
+          <dt>
+Publishing commit          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs/tree/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36"
+               target="_blank"
+               rel="noopener">github.com/python-attrs/attrs/tree/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36</a>
+          </dd>
+      </dl>
+    </div>
+    <div class="attestation__metadata">
+      <div class="attestation__metadata-header">
+        <span class="attestation__metadata-icon">
+            <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
+        </span>
+        <h5 class="attestation__metadata-title">
+Workflow        </h5>
+      </div>
+      <dl class="attestation__metadata-content">
+          <dt>
+Publishing configuration          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs/blob/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36/.github/workflows/pypi-package.yml" target="_blank" rel="noopener">github.com/python-attrs/attrs/blob/7bfc49e9b22d5ba25b6e429524c3d49fee27cb36/.github/workflows/pypi-package.yml</a>
+          </dd>
+          <dt>
+Publishing logs          </dt>
+          <dd>
+            <a href="https://github.com/python-attrs/attrs/actions/runs/23299546967/attempts/1" target="_blank" rel="noopener">github.com/python-attrs/attrs/actions/runs/23299546967/attempts/1</a>
+          </dd>
+      </dl>
+    </div>
+    <div class="attestation__metadata">
+      <div class="attestation__metadata-header">
+        <span class="attestation__metadata-icon">
+          <i class="fa-regular fa-file" aria-hidden="true"></i>
+        </span>
+        <h5 class="attestation__metadata-title">Artifact</h5>
+      </div>
+      <dl class="attestation__metadata-content">
+          <dt>Subject</dt>
+          <dd>
+            <code>attrs-26.1.0-py3-none-any.whl</code>
+          </dd>
+          <dt>SHA-256 checksum</dt>
+          <dd>
+            <code class="code-block code-block--with-copy attestation__checksum"
+                  data-controller="clipboard">
+              <span data-clipboard-target="source">c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309</span>
+              <button type="button"
+                      class="button button--small copy-tooltip copy-tooltip-w"
+                      data-action="clipboard#copy"
+                      data-clipboard-target="tooltip"
+                      data-clipboard-tooltip-value="Copy to clipboard">
+                <i class="fa-regular fa-copy" aria-hidden="true"></i>
+              </button>
+            </code>
+            <a href="https://docs.pypi.org/attestations/consuming-attestations/"
+               target="_blank"
+               rel="noopener">Verifying attestations</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+</div></div><div id="history"
+     data-project-tabs-target="content"
+     role="tabpanel"
+     aria-labelledby="history-tab"
+     tabindex="-1">
+  <h2 class="page-title split-layout">
+    <span>Release history</span>
+    <span class="reset-text margin-top">
+      <a href="/help/#project-release-notifications">Release notifications</a> |
+      <a href="/rss/project/attrs/releases.xml">RSS feed <i class="fa fa-rss" aria-hidden="true"></i></a>
+    </span>
+  </h2>
+  <div class="release-timeline">
+      <div class="release release--current">
+        <div class="release__current-badge">
+            <span class="badge">This release</span>
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/blue-cube.572a5bfb.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/26.1.0/">26.1.0</a>
+                <span class="badge">This release</span>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2026-03-19T14:22:23+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 19, 2026
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/26.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/25.4.0/">25.4.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2025-10-06T13:54:43+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Oct 6, 2025
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/25.4.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/25.3.0/">25.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2025-03-13T11:10:21+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 13, 2025
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/25.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/25.2.0/">25.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2025-03-12T10:02:22+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 12, 2025
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/25.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/25.1.0/">25.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2025-01-25T11:30:10+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Jan 25, 2025
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/25.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/24.3.0/">24.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2024-12-16T06:59:26+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 16, 2024
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/24.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/24.2.0/">24.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2024-08-06T14:37:36+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Aug 6, 2024
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/24.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/24.1.0/">24.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2024-08-03T14:30:18+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Aug 3, 2024
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/24.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/23.2.0/">23.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2023-12-31T06:30:30+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 31, 2023
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/23.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/23.1.0/">23.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2023-04-16T10:48:16+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Apr 16, 2023
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/23.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/22.2.0/">22.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2022-12-21T09:48:49+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 21, 2022
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/22.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/22.1.0/">22.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2022-07-28T13:20:27+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Jul 28, 2022
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/22.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/21.4.0/">21.4.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2021-12-29T13:15:06+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 29, 2021
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/21.4.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/21.3.0/">21.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2021-12-28T06:07:16+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 28, 2021
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/21.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/21.2.0/">21.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2021-05-07T09:32:13+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    May 7, 2021
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/21.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release release--yanked">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+            <div class="release__card-header">
+              <a href="/help/#yanked"
+title="Release yanked on May 7, 2021"><i class="fa fa-ban" aria-hidden="true"></i> <span>Yanked</span></a>
+            </div>
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/21.1.0/">21.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2021-05-06T08:26:59+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    May 6, 2021
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/21.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+            <div class="release__card-footer">
+              <p><strong>Yanked reason:</strong> Installable but not importable on Python 3.4.</p>
+            </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/20.3.0/">20.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2020-11-05T10:04:47+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Nov 5, 2020
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/20.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/20.2.0/">20.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2020-09-05T10:24:44+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Sep 5, 2020
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/20.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/20.1.0/">20.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2020-08-20T17:23:25+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Aug 20, 2020
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/20.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/19.3.0/">19.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2019-10-15T05:52:40+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Oct 15, 2019
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/19.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/19.2.0/">19.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2019-10-01T15:08:40+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Oct 1, 2019
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/19.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/19.1.0/">19.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2019-03-03T09:07:56+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Mar 3, 2019
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/19.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/18.2.0/">18.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2018-09-01T04:50:57+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Sep 1, 2018
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/18.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/18.1.0/">18.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2018-05-03T16:42:28+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    May 3, 2018
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/18.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/17.4.0/">17.4.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2017-12-30T08:20:05+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 30, 2017
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/17.4.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/17.3.0/">17.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2017-11-08T17:57:49+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Nov 8, 2017
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/17.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/17.2.0/">17.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2017-05-24T18:04:08+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    May 24, 2017
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/17.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/17.1.0/">17.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2017-05-16T17:04:23+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    May 16, 2017
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/17.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/16.3.0/">16.3.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2016-11-24T13:07:06+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Nov 24, 2016
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/16.3.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/16.2.0/">16.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2016-09-17T06:00:38+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Sep 17, 2016
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/16.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/16.1.0/">16.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2016-08-30T10:32:22+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Aug 30, 2016
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/16.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/16.0.0/">16.0.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2016-05-23T18:34:03+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    May 23, 2016
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/16.0.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/15.2.0/">15.2.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2015-12-08T15:30:01+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Dec 8, 2015
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/15.2.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/15.1.0/">15.1.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2015-08-20T11:57:16+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Aug 20, 2015
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/15.1.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/15.0.0/">15.0.0</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2015-04-15T21:55:48+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Apr 15, 2015
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/15.0.0/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="release release--pre-release">
+        <div class="release__current-badge">
+        </div>
+        <div class="release__graphic">
+            <div class="release__line"></div>
+            <img class="release__node" alt="" src="https://pypi.org/static/images/white-cube.2351a86c.svg">
+        </div>
+        <div class="release__card">
+            <div class="release__card-header">
+              <a href="/help/#pre-release-versioning"><i class="fa fa-flask" aria-hidden="true"></i> <span>Pre-release</span></a>
+            </div>
+          <div class="release__card-body">
+            <p class="release__version">
+              <a href="/project/attrs/15.0.0a1/">15.0.0a1</a>
+            </p>
+            <p class="release__meta">
+              <span class="release__date"><i class="fa-regular fa-calendar" aria-hidden="true"></i> <time datetime="2015-02-21T10:42:55+0000"
+        data-controller="localized-time"
+        data-localized-time-relative="true"
+        data-localized-time-show-time="false">
+    Feb 21, 2015
+  </time></span>
+                <span class="release__meta-divider" aria-hidden="true"></span>
+                <a href="/project/attrs/15.0.0a1/#files"><i class="fa-regular fa-circle-down" aria-hidden="true"></i> 2 release files</a>
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>      </div>
+    </div>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__left">
+      <a class="footer__logo" href="/">
+        <img src="/static/images/white-cube.2351a86c.svg"
+             alt=""
+             class="-js-white-cube">
+        <span>PyPI</span>
+      </a>
+      <p class="footer__tagline">Developed and maintained by the <a href="https://www.python.org/psf/" title="External link" target="_blank" rel="noopener">Python Software Foundation</a> and Python community, for the Python community.</p>
+        <p class="footer__status">
+          <span class="footer__status-dot" aria-hidden="true"></span>
+          <a href="https://status.python.org/"
+             title="External link"
+             target="_blank"
+             rel="noopener">Status: <span data-statuspage-domain="https://2p66nmmycsj3.statuspage.io">all systems operational</span></a>
+        </p>
+      <div class="footer__donate">
+        <a class="button button--small" href="https://donate.pypi.org">Donate today!</a>
+      </div>
+    </div>
+    <div class="footer__right">
+      <div class="footer__menu">
+        <h2>Help</h2>
+        <nav aria-label="Help navigation">
+          <ul>
+            <li>
+              <a href="https://packaging.python.org/tutorials/installing-packages/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Installing packages</a>
+            </li>
+            <li>
+              <a href="https://packaging.python.org/tutorials/packaging-projects/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Uploading packages</a>
+            </li>
+            <li>
+              <a href="https://packaging.python.org/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">User guide</a>
+            </li>
+            <li>
+              <a href="https://www.python.org/dev/peps/pep-0541/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Project name retention</a>
+            </li>
+            <li>
+              <a href="/help/">FAQs</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer__menu">
+        <h2>About PyPI</h2>
+        <nav aria-label="About PyPI navigation">
+          <ul>
+            <li>
+              <a href="https://blog.pypi.org"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">PyPI Blog</a>
+            </li>
+            <li>
+              <a href="https://dtdg.co/pypi"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Infrastructure dashboard</a>
+            </li>
+            <li>
+              <a href="/stats/">Statistics</a>
+            </li>
+            <li>
+              <a href="/trademarks/">Logos & trademarks</a>
+            </li>
+            <li>
+              <a href="/sponsors/">Our sponsors</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer__menu">
+        <h2>Contributing to PyPI</h2>
+        <nav aria-label="How to contribute navigation">
+          <ul>
+            <li>
+              <a href="/help/#feedback">Bugs and feedback</a>
+            </li>
+            <li>
+              <a href="https://github.com/pypi/warehouse"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Contribute on GitHub</a>
+            </li>
+            <li>
+              <a href="https://hosted.weblate.org/projects/pypa/warehouse/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Translate PyPI</a>
+            </li>
+            <li>
+              <a href="/sponsors/">Sponsor PyPI</a>
+            </li>
+            <li>
+              <a href="https://github.com/pypi/warehouse/graphs/contributors"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Development credits</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer__menu">
+        <h2>Using PyPI</h2>
+        <nav aria-label="Using PyPI navigation">
+          <ul>
+            <li>
+              <a href="https://policies.python.org/pypi.org/Terms-of-Service/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Terms of Service</a>
+            </li>
+            <li>
+              <a href="/security/">Report security issue</a>
+            </li>
+            <li>
+              <a href="https://policies.python.org/python.org/code-of-conduct/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Code of conduct</a>
+            </li>
+            <li>
+              <a href="https://policies.python.org/pypi.org/Privacy-Notice/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Privacy Notice</a>
+            </li>
+            <li>
+              <a href="https://policies.python.org/pypi.org/Acceptable-Use-Policy/"
+                 title="External link"
+                 target="_blank"
+                 rel="noopener">Acceptable Use Policy</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="footer__switch-viewport hide-on-desktop">
+    <button type="button"
+            class="button button--small button--switch-to-desktop hidden"
+            data-viewport-toggle-target="switchToDesktop"
+            data-action="viewport-toggle#switchToDesktop">Switch to desktop version</button>
+  </div>
+</footer>
+<div class="sponsors">
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://www.anthropic.com/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/0e16ff2846ab7bc04f1e52d760b072c987232f52/68747470733a2f2f73332e6475616c737461636b2e75732d656173742d322e616d617a6f6e6177732e636f6d2f707974686f6e646f746f72672d6173736574732f6d656469612f73706f6e736f725f7765625f6c6f676f732f416e7468726f7069635f6c6f676f5f2d5f536c6174652e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Anthropic, PBC</span>
+        <span class="sponsors__description">Visionary sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://www.techatbloomberg.com/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/2056e7cc45e271b6b509980e9ff24b8b6346f2f4/68747470733a2f2f73332e6475616c737461636b2e75732d656173742d322e616d617a6f6e6177732e636f6d2f707974686f6e646f746f72672d6173736574732f6d656469612f73706f6e736f725f7765625f6c6f676f732f626c6f6f6d626572672e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Bloomberg</span>
+        <span class="sponsors__description">Visionary sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://www.hudsonrivertrading.com/careers/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/7e24ecafc35532bbd56c7c91521ea6701110c742/68747470733a2f2f73332e6475616c737461636b2e75732d656173742d322e616d617a6f6e6177732e636f6d2f707974686f6e646f746f72672d6173736574732f6d656469612f73706f6e736f725f7765625f6c6f676f732f6872742e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Hudson River Trading</span>
+        <span class="sponsors__description">Visionary sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://about.facebook.com/meta/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/6f7cbf25b7d9ee146661528e012e8fa51d6f3337/68747470733a2f2f73332e6475616c737461636b2e75732d656173742d322e616d617a6f6e6177732e636f6d2f707974686f6e646f746f72672d6173736574732f6d656469612f73706f6e736f725f7765625f6c6f676f732f4d6574615f6c6f636b75705f706f7369746976655f7072696d6172795f5247425f636f70795f68546b493532472e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Meta</span>
+        <span class="sponsors__description">Visionary sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://developer.nvidia.com">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/22baa32a7b36b109ce052634015d878f5d029280/68747470733a2f2f73332e6475616c737461636b2e75732d656173742d322e616d617a6f6e6177732e636f6d2f707974686f6e646f746f72672d6173736574732f6d656469612f73706f6e736f725f7765625f6c6f676f732f6e76696469612e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">NVIDIA</span>
+        <span class="sponsors__description">Visionary sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://aka.ms/python">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/34ebcaca9a4316e862f2f7641b12534f0cb81bf1/68747470733a2f2f73332e6475616c737461636b2e75732d656173742d322e616d617a6f6e6177732e636f6d2f707974686f6e646f746f72672d6173736574732f6d656469612f73706f6e736f725f7765625f6c6f676f732f6d6963726f736f66742e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Microsoft</span>
+        <span class="sponsors__description">Sustainability sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://depot.dev">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/237c8773674b9f8beff9f894a07424e3b579cd6a/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f6465706f742d636f6c6f722d6c6f676f2d35567a75416e7a6b2e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Depot</span>
+        <span class="sponsors__description">Continuous Integration</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://aws.amazon.com/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/f0e9bd2edb2aa1c533d61b0d4fda0ee761bef88a/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f6177732d636f6c6f722d6c6f676f2d416c6f43525230612e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">AWS</span>
+        <span class="sponsors__description">Cloud computing and Security Sponsor</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://www.datadoghq.com/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/530379bec76c3440bd94a24092f49e27323ad0d7/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f64617461646f672d636f6c6f722d6c6f676f2d71616563774a67722e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Datadog</span>
+        <span class="sponsors__description">Monitoring</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://www.fastly.com/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/9706778018adad6f5bf682f55d7bbc226abe551c/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f666173746c792d636f6c6f722d6c6f676f2d766c6d424c33654c2e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Fastly</span>
+        <span class="sponsors__description">CDN</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://careers.google.com/">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/522342e78db3080c18697369dde99a0ed7925e86/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f676f6f676c652d636f6c6f722d6c6f676f2d32755437496c54702e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Google</span>
+        <span class="sponsors__description">Download Analytics</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://sentry.io/for/python/?utm_source=pypi&amp;utm_medium=paid-community&amp;utm_campaign=python-na-evergreen&amp;utm_content=static-ad-pypi-sponsor-learnmore">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/f2a422796f8e4d51d60d7030b7973aa1651bd096/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f73656e7472792d636f6c6f722d6c6f676f2d346e306a654878502e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">Sentry</span>
+        <span class="sponsors__description">Error logging</span>
+      </a>
+      <a class="sponsors__sponsor"
+         target="_blank"
+         rel="noopener"
+         href="https://statuspage.io">
+        <span class="sponsors__image"><img src="https://pypi-camo.freetls.fastly.net/b0ba0741ac65afcb01ebb4bbf0634c54b8a15827/68747470733a2f2f73746f726167652e676f6f676c65617069732e636f6d2f707970692d6173736574732f73706f6e736f726c6f676f732f737461747573706167652d636f6c6f722d6c6f676f2d423232436b746e6b2e706e67" alt="" loading="lazy"></span>
+        <span class="sponsors__name">StatusPage</span>
+        <span class="sponsors__description">Status page</span>
+      </a>
+</div><div class="legal-footer">
+  <ul>
+    <li>"PyPI", "Python Package Index", and the blocks logos are registered <a href="/trademarks/">trademarks</a> of the <a href="https://www.python.org/psf-landing" target="_blank" rel="noopener">Python Software Foundation</a>.</li>
+    <li>
+      © 2026 <a href="https://www.python.org/psf-landing/"
+    title="External link"
+    target="_blank"
+    rel="noopener">Python Software Foundation</a>
+    </li>
+    <li>
+      <a href="/sitemap/">Site map</a>
+    </li>
+      <li>
+Deployed from <a href="https://github.com/pypi/warehouse/commit/b9dd37fe345f2143c7ad9ab30d8d1307e6055841" title="External link" target="_blank" rel="noopener"><code>b9dd37f</code></a>      </li>
+  </ul>
+</div>
+</body>
+</html>

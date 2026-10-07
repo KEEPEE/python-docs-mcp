@@ -8,8 +8,8 @@ Tool set:
   Identifier resolution order:
 
   1. dotted names (e.g. ``xml.etree.ElementTree``) → fetched directly; the
-     docs site only has lowercase filenames, so on 404 the fetcher retries
-     with the lowercased name;
+     docs site only has lowercase filenames, so the fetcher tries the
+     LOWERCASED name first and the name as given only as a fallback;
   2. plain lowercase module paths (e.g. ``json``) → fetched directly;
   3. other plain names (e.g. ``ElementTree``) → resolved through the search
      index: the unique entry whose full name or last dotted segment matches
@@ -22,9 +22,16 @@ Tool set:
 - ``python_search(query, limit=8)`` — rank stdlib modules by name and
   description from the cached search index.
 - ``pypi_package(name, version=None)`` — PyPI metadata + README for a package
-  (optionally version-pinned), cached 1 day keyed by name+version.
+  (optionally version-pinned), read from the robots-allowed **project page**
+  (``https://pypi.org/project/<name>/``), cached 1 day keyed by name+version.
+  The robots-disallowed JSON API is used only with the explicit
+  ``PYTHON_DOCS_MCP_PYPI_JSON_OPT_IN=1`` opt-in, and then the result carries a
+  ``"notice"`` saying so.
 - ``python_status()`` — real health check over the search index, the local
-  cache and light GET probes of docs.python.org and pypi.org.
+  cache and light GET probes of docs.python.org and pypi.org (both on
+  robots-allowed paths).  Reports the politeness layer's counters in a
+  top-level ``politeness`` block — deliberately outside ``checks``, so it is
+  diagnostics and never drags ``overall`` to "degraded".
 
 Design rules (hard requirements):
 
@@ -37,12 +44,17 @@ Design rules (hard requirements):
 - Fetched content is cached in :class:`~python_docs_mcp.cache.DocCache`:
   module docs TTL 7 days (key ``doc:{module}``), PyPI metadata TTL 1 day
   (key ``pypi:{name}[:{version}]``). Failures are never cached.
+- Every network path is politeness-gated (see :mod:`python_docs_mcp.politeness`)
+  and every tool binds one request budget with
+  :func:`python_docs_mcp.fetchers.tool_budget`, so one tool call cannot make an
+  unbounded number of requests (index build included).
 """
 
 from __future__ import annotations
 
 import json
 import re
+import sqlite3
 
 import httpx
 from mcp.server.fastmcp import FastMCP
@@ -51,11 +63,14 @@ from . import __version__
 from .cache import DocCache
 from .fetchers import (
     DOCS_BASE_URL,
-    PYPI_JSON_BASE_URL,
-    USER_AGENT,
+    PYPI_PROJECT_BASE_URL,
+    current_budget,
     fetch_pypi_package,
     fetch_python_module,
+    get_politeness,
+    tool_budget,
 )
+from .politeness import default_robots_db_path
 from .search import get_index, search_modules
 
 mcp = FastMCP("python-docs")
@@ -68,11 +83,25 @@ PYPI_META_TTL = 86400
 #: serves module pages only under lowercase filenames).
 _PLAIN_MODULE_RE = re.compile(r"^[a-z0-9_]+$")
 
-#: Light GET probes for python_status (name, url).
+#: Light GET probes for python_status (name, url).  Both URLs are
+#: robots-ALLOWED: the pypi probe used to be ``/pypi/mcp/json``, which
+#: ``Disallow: /pypi/*/json`` forbids — a health check must not be the one
+#: place a tool still violates robots.txt.
 _ENDPOINT_PROBES = (
     ("docs_python_org", f"{DOCS_BASE_URL}json.html"),
-    ("pypi_org", f"{PYPI_JSON_BASE_URL}/mcp/json"),
+    ("pypi_org", f"{PYPI_PROJECT_BASE_URL}mcp/"),
 )
+
+#: Request budget one ``python_status`` call may spend.  Since A8 F3 the
+#: probes pay for the robots.txt fetch of their host as well, and the call also
+#: refreshes the search index when it is stale.  Measured live (A10 smoke):
+#: cold = index robots (1) + index page (1) + docs probe (1, robots cached) +
+#: pypi robots (1) + pypi probe (1) = **5 units**; warm = **2**.  The limit is
+#: 8 so a probe can never come back as ``error: request budget exhausted`` —
+#: that would turn ``overall`` to ``degraded`` for a reason that has nothing to
+#: do with the site being down (A7 §4 warning).  The reserve also covers one
+#: ``429`` retry or one redirect hop per probe.
+STATUS_BUDGET_LIMIT = 8
 
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$")
 
@@ -110,12 +139,16 @@ def _cache_get(key: str) -> dict | None:
 
 
 def _cache_set(key: str, value: dict, ttl_seconds: int) -> None:
-    """Store a doc dict under ``key``; cache-write failures are ignored."""
+    """Store a doc dict under ``key``; cache-write failures are ignored.
+
+    ``set_value`` (not ``set``) so a row that also carries the fetcher's
+    ``etag`` / ``body`` for conditional GET is not NULLed by this write.
+    """
     cache = _cache()
     if cache is None:
         return
     try:
-        cache.set(key, json.dumps(value), ttl_seconds)
+        cache.set_value(key, json.dumps(value), ttl_seconds)
     except Exception:
         pass
 
@@ -264,33 +297,106 @@ def _error_from(fetch_result: dict, context: str) -> dict:
 
 
 def _probe_endpoint(url: str) -> dict:
-    """Light GET probe (quick httpx, then a short curl fallback); never raises.
+    """Light GET probe through the politeness layer; never raises.
 
-    The curl fallback matters for hosts whose edge intermittently stalls
-    Python TLS clients while serving curl fine — the same behaviour
-    fetchers._fetch_url works around.
+    The old version fell back to a ``curl`` subprocess for "edges that stall
+    Python TLS clients".  That fallback is gone (see :mod:`.fetchers`): it
+    bypassed robots.txt, throttle, retry and budget entirely, and a health
+    check that hammers a site is not a fix for politeness — it is the hole in
+    it.  The layer's transport retry + backoff + stall detection covers the
+    real failure mode within a bounded time.
+
+    The probe spends the *tool call's* request budget when one is bound, so
+    ``python_status`` cannot quietly add requests on top of the budget the
+    index build already used (its own 8 s timeout stays — a status probe
+    should not inherit the 15 s page timeout).
     """
     try:
+        budget_kwargs: dict = {}
+        bound = current_budget()
+        if bound is not None:
+            budget_kwargs = {"budget_scope": bound[0], "budget_limit": bound[1]}
         with httpx.Client(timeout=8.0, follow_redirects=True) as client:
-            resp = client.get(url, headers={"User-Agent": USER_AGENT})
-        if resp.status_code < 400:
-            return {"status": "ok", "http_status": resp.status_code}
-    except Exception:
-        pass
-    try:
-        import subprocess
-
-        proc = subprocess.run(
-            ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}",
-             "-L", "--max-time", "10", url],
-            capture_output=True, text=True, timeout=20,
-        )
-        code = int(proc.stdout.strip() or 0)
-        if code:
-            return {"status": "ok" if code < 400 else "error", "http_status": code}
+            response = get_politeness().get(client, url, **budget_kwargs)
+        if response.blocked_by_robots or response.error:
+            return {
+                "status": "error",
+                "http_status": response.status_code,
+                "error": response.error or "blocked by robots.txt",
+            }
+        status_code = int(response.status_code) if response.status_code is not None else 0
+        return {"status": "ok" if status_code < 400 else "error", "http_status": status_code}
     except Exception as exc:
         return {"status": "error", "http_status": None, "error": f"{type(exc).__name__}: {exc}"}
-    return {"status": "error", "http_status": None, "error": "no response from httpx or curl"}
+
+
+def _robots_cache_rows() -> int | None:
+    """How many robots.txt records the politeness SQLite cache holds (read-only).
+
+    ``0`` when the file does not exist (the layer then runs on its in-memory
+    fallback — politeness still applies, it just forgets across restarts);
+    ``None`` when the path itself could not be resolved.
+    """
+    try:
+        path = default_robots_db_path()
+    except Exception:
+        return None
+    try:
+        import os
+
+        if not os.path.exists(path):
+            return 0
+        conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+        try:
+            return int(conn.execute("SELECT COUNT(*) FROM robots").fetchone()[0])
+        finally:
+            conn.close()
+    except Exception:
+        return 0
+
+
+def _politeness_report() -> dict:
+    """Politeness counters for ``python_status``; never raises.
+
+    Deliberately *outside* ``checks``: it is diagnostics, not a health signal,
+    so it must not drag ``overall`` to "degraded" on its own.
+    """
+    try:
+        stats = get_politeness().stats()
+    except Exception as exc:  # pragma: no cover - defensive
+        return {"status": "error", "error": f"{exc.__class__.__name__}: {exc}"}
+    return {
+        "status": "ok",
+        "disabled": bool(stats.get("disabled", False)),
+        "requests": int(stats.get("requests", 0)),
+        # A8 F3: ``requests`` is content-only; robots attempts are the other
+        # half of the wire total.  F1 puts the robots waits in their own
+        # counters, F2 counts redirect hops, F4 counts challenge detections.
+        "robots_requests": int(stats.get("robots_requests", 0)),
+        "robots_rows": _robots_cache_rows(),
+        "robots_fetches": int(stats.get("robots_fetches", 0)),
+        "robots_cache_hits": int(stats.get("robots_cache_hits", 0)),
+        "robots_negative": int(stats.get("robots_negative", 0)),
+        "robots_refreshed_unchanged": int(stats.get("robots_refreshed_unchanged", 0)),
+        "blocked_by_robots": int(stats.get("blocked_by_robots", 0)),
+        "throttle_waits": int(stats.get("throttle_waits", 0)),
+        "throttle_sleep_s": round(float(stats.get("throttle_sleep_s", 0.0)), 3),
+        "robots_throttle_waits": int(stats.get("robots_throttle_waits", 0)),
+        "robots_throttle_sleep_s": round(float(stats.get("robots_throttle_sleep_s", 0.0)), 3),
+        "redirect_hops": int(stats.get("redirect_hops", 0)),
+        "challenge_detected": int(stats.get("challenge_detected", 0)),
+        "challenge_retries": int(stats.get("challenge_retries", 0)),
+        "host_delays": stats.get("hosts", {}),
+        "budgets": stats.get("budgets", {}),
+        "budget_denied": int(stats.get("budget_denied", 0)),
+        "conditional": int(stats.get("conditional", 0)),
+        "conditional_skipped": int(stats.get("conditional_skipped", 0)),
+        "revalidated_304": int(stats.get("revalidated_304", 0)),
+        "retries_429": int(stats.get("retries_429", 0)),
+        "retry_after_honoured": int(stats.get("retry_after_honoured", 0)),
+        "retries_transport": int(stats.get("retries_transport", 0)),
+        "stalls": int(stats.get("stalls", 0)),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -328,7 +434,8 @@ def python_docs(identifier: str, topic: str | None = None, max_tokens: int = 800
     python_search() to find the right module name.
     """
     try:
-        return _python_docs_impl(identifier, topic, max_tokens)
+        with tool_budget("python_docs"):
+            return _python_docs_impl(identifier, topic, max_tokens)
     except Exception as exc:  # last-resort guard: never let an exception escape
         return {
             "ok": False,
@@ -413,22 +520,23 @@ def python_search(query: str, limit: int = 8) -> dict:
     {"ok": False, "error", "suggestion"} — retry later.
     """
     try:
-        index = get_index()
-        modules = index.get("modules") or []
-        if not modules and index.get("error"):
+        with tool_budget("python_search"):
+            index = get_index()
+            modules = index.get("modules") or []
+            if not modules and index.get("error"):
+                return {
+                    "ok": False,
+                    "error": f"search index unavailable: {index['error']}",
+                    "suggestion": "retry python_search() later (the index rebuilds automatically)",
+                }
+            results = search_modules(query, limit=limit)
             return {
-                "ok": False,
-                "error": f"search index unavailable: {index['error']}",
-                "suggestion": "retry python_search() later (the index rebuilds automatically)",
+                "ok": True,
+                "query": query,
+                "results": results,
+                "index_count": int(index.get("count") or len(modules)),
+                "stale": bool(index.get("stale")),
             }
-        results = search_modules(query, limit=limit)
-        return {
-            "ok": True,
-            "query": query,
-            "results": results,
-            "index_count": int(index.get("count") or len(modules)),
-            "stale": bool(index.get("stale")),
-        }
     except Exception as exc:
         return {
             "ok": False,
@@ -446,6 +554,13 @@ def pypi_package(name: str, version: str | None = None) -> dict:
     ``version`` is given the lookup is pinned to that release; otherwise the
     latest version is used. Metadata is cached for 1 day keyed by name+version;
     failures are never cached.
+
+    The source is the robots-allowed **project page**
+    (https://pypi.org/project/<name>/).  PyPI's JSON API is disallowed by that
+    robots.txt and is used only when the environment variable
+    PYTHON_DOCS_MCP_PYPI_JSON_OPT_IN is set to 1 — in that case the result also
+    carries a "notice" field stating that the disallowed endpoint was used, at
+    the user's own responsibility.  There is no fallback between the two.
 
     On failure returns {"ok": False, "error", "suggestion"}.
     """
@@ -476,7 +591,8 @@ def pypi_package(name: str, version: str | None = None) -> dict:
                     out["cached"] = True
                     return out
 
-        result = fetch_pypi_package(pkg, ver)
+        with tool_budget("pypi_package"):
+            result = fetch_pypi_package(pkg, ver)
         if not result.get("ok"):
             return _error_from(result, "pypi lookup failed")
 
@@ -492,6 +608,10 @@ def pypi_package(name: str, version: str | None = None) -> dict:
             "readme_markdown": result.get("readme_markdown"),
             "url": result.get("url"),
         }
+        if result.get("notice"):
+            # Only ever set on the explicit opt-in path; kept in the cached copy
+            # so a cached result stays as honest as a fresh one.
+            data["notice"] = result["notice"]
         _cache_set(key, data, PYPI_META_TTL)
         data["cached"] = False
         return data
@@ -507,41 +627,50 @@ def pypi_package(name: str, version: str | None = None) -> dict:
 def python_status() -> dict:
     """Real health check: search index, local cache and upstream endpoints.
 
-    Probes docs.python.org and pypi.org with a light GET (8s timeout each,
-    curl fallback). Never raises; returns {"server", "version",
-    "checks": {...}, "overall": "ok"|"degraded"|"error"} where overall is
-    "error" when the search index is unavailable, "degraded" when any check
-    fails, and "ok" otherwise.
+    Probes docs.python.org and pypi.org with a light GET on robots-allowed
+    paths (8s timeout each, through the politeness layer — no curl subprocess).
+    Never raises; returns {"server", "version", "checks": {...}, "politeness":
+    {...}, "overall": "ok"|"degraded"|"error"} where overall is "error" when
+    the search index is unavailable, "degraded" when any check fails, and "ok"
+    otherwise.  The "politeness" block holds the layer's counters (robots cache
+    state, throttle delays, budget use, conditional-GET hits) and is not a
+    health signal — it never changes "overall".
+
+    The call spends :data:`STATUS_BUDGET_LIMIT` requests, which is sized so the
+    probes (plus a stale-index rebuild) always fit: a probe refused by the
+    budget would report ``error`` and make ``overall`` "degraded" although
+    every site answered.
     """
     try:
         checks: dict = {}
 
-        index = get_index()
-        entry_count = len(index.get("modules") or [])
-        checks["search_index"] = {
-            "status": "ok" if entry_count else "error",
-            "entries": entry_count,
-            "built_at": index.get("built_at"),
-            "stale": bool(index.get("stale")),
-        }
-
-        try:
-            stats = DocCache().stats()
-            checks["cache"] = {
-                "status": "ok",
-                "entries": int(stats.get("entries", 0)),
-                "expired": int(stats.get("expired", 0)),
-            }
-        except Exception as exc:
-            checks["cache"] = {
-                "status": "error",
-                "entries": 0,
-                "expired": 0,
-                "error": f"{type(exc).__name__}: {exc}",
+        with tool_budget("python_status", limit=STATUS_BUDGET_LIMIT):
+            index = get_index()
+            entry_count = len(index.get("modules") or [])
+            checks["search_index"] = {
+                "status": "ok" if entry_count else "error",
+                "entries": entry_count,
+                "built_at": index.get("built_at"),
+                "stale": bool(index.get("stale")),
             }
 
-        for name, url in _ENDPOINT_PROBES:
-            checks[name] = _probe_endpoint(url)
+            try:
+                stats = DocCache().stats()
+                checks["cache"] = {
+                    "status": "ok",
+                    "entries": int(stats.get("entries", 0)),
+                    "expired": int(stats.get("expired", 0)),
+                }
+            except Exception as exc:
+                checks["cache"] = {
+                    "status": "error",
+                    "entries": 0,
+                    "expired": 0,
+                    "error": f"{type(exc).__name__}: {exc}",
+                }
+
+            for name, url in _ENDPOINT_PROBES:
+                checks[name] = _probe_endpoint(url)
 
         if checks["search_index"]["status"] == "error":
             overall = "error"
@@ -553,6 +682,9 @@ def python_status() -> dict:
             "server": "python-docs-mcp",
             "version": __version__,
             "checks": checks,
+            # Diagnostics, not a health signal: outside ``checks`` on purpose so
+            # it can never move ``overall`` to "degraded".
+            "politeness": _politeness_report(),
             "overall": overall,
         }
     except Exception as exc:
