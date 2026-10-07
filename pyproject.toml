@@ -9,6 +9,30 @@ description = "Real-time CPython stdlib documentation and PyPI package info MCP 
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+keywords = [
+  "mcp",
+  "model-context-protocol",
+  "python",
+  "cpython",
+  "stdlib",
+  "pypi",
+  "documentation",
+  "developer-tools",
+  "ai-agents",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Documentation",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Utilities",
+]
 dependencies = [
   "mcp>=1.2.0,<2.0",
   "httpx>=0.27",
@@ -16,6 +40,11 @@ dependencies = [
   "lxml>=5.0",
   "markdownify>=0.13",
 ]
+
+[project.urls]
+Homepage = "https://github.com/KEEPEE/python-docs-mcp"
+Repository = "https://github.com/KEEPEE/python-docs-mcp.git"
+Issues = "https://github.com/KEEPEE/python-docs-mcp/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-asyncio>=0.23"]

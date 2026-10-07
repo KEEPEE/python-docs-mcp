@@ -104,7 +104,7 @@ TIMEOUTS = (5.0, 10.0, REQUEST_TIMEOUT)
 #: robots rules (a robots file can only match a token it can see) and it hides
 #: who is knocking.
 USER_AGENT = (
-    "python-docs-mcp/0.1 (+https://github.com/KEEPEE/python-docs-mcp)"
+    "python-docs-mcp/0.2 (+https://github.com/KEEPEE/python-docs-mcp)"
 )
 
 #: The only hosts this module ever contacts.  Handed to the politeness layer as

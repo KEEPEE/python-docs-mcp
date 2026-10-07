@@ -16,13 +16,25 @@ build plus live fetches against docs.python.org and pypi.org.
 from __future__ import annotations
 
 import json
+import os
 import queue
 import subprocess
 import sys
 import threading
 import time
 
-SERVER_CMD = ["/home/keepee/projects/python-docs-mcp/.venv/bin/python-docs"]
+#: Which server process to spawn.  Override with ``PYTHON_DOCS_MCP_E2E_CMD``
+#: (a shell-split command); otherwise use this checkout's ``.venv`` if it has
+#: the console script, else run the module with the interpreter that started
+#: this script (works with any install, editable or not).
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_LOCAL_BIN = os.path.join(_REPO_ROOT, ".venv", "bin", "python-docs")
+if os.environ.get("PYTHON_DOCS_MCP_E2E_CMD"):
+    SERVER_CMD = os.environ["PYTHON_DOCS_MCP_E2E_CMD"].split()
+elif os.path.exists(_LOCAL_BIN):
+    SERVER_CMD = [_LOCAL_BIN]
+else:
+    SERVER_CMD = [sys.executable, "-m", "python_docs_mcp.server"]
 PROTOCOL_VERSION = "2025-03-26"
 PER_CALL_TIMEOUT = 120.0
 FIRST_CALL_TIMEOUT = 300.0
