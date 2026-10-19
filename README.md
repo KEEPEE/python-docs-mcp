@@ -1,5 +1,7 @@
 # python-docs-mcp
 
+[![MCP](https://img.shields.io/badge/MCP-server-6b46c1?logo=modelcontextprotocol&logoColor=white)](https://modelcontextprotocol.io) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Source: docs.python.org](https://img.shields.io/badge/source-docs.python.org-blue)](https://docs.python.org/3/library/)
+
 An [MCP](https://modelcontextprotocol.io) (Model Context Protocol) server that gives AI coding agents **live CPython standard-library documentation and PyPI package information** instead of whatever the model happens to remember. Module pages are scraped from docs.python.org at request time, cached locally, and returned as clean markdown — so generated Python targets real, current APIs rather than deprecated or invented ones.
 
 - **Stdlib modules** — every module page fetched live from [docs.python.org/3/library](https://docs.python.org/3/library/) and converted to markdown (the `/3/` line is whatever CPython currently documents — measured `3.14.8`)
